@@ -17,7 +17,6 @@ func _ready():
 	player.move.connect(on_player_move)
 	
 func on_player_move() -> void:
-	print('received')
 	var range = player.movement_range
 	var id_path
 	
