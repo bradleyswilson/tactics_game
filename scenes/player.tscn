@@ -1,0 +1,47 @@
+[gd_scene load_steps=6 format=3 uid="uid://b5nph7ryuc3rc"]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_jyxtc"]
+[ext_resource type="Texture2D" uid="uid://dqvuoirg3uvv" path="res://assets/iso_diver_back.aseprite" id="2_0p22m"]
+[ext_resource type="Texture2D" uid="uid://biuu22dgoufbv" path="res://assets/iso_diver_front.aseprite" id="3_867jv"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_l603a"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_0p22m")
+}],
+"loop": true,
+"name": &"back",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_867jv")
+}],
+"loop": true,
+"name": &"front",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xkpcy"]
+radius = 5.0
+height = 10.0
+
+[node name="Player" type="CharacterBody2D"]
+motion_mode = 1
+script = ExtResource("1_jyxtc")
+
+[node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+texture_repeat = 1
+sprite_frames = SubResource("SpriteFrames_l603a")
+animation = &"back"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 8)
+shape = SubResource("CapsuleShape2D_xkpcy")
+
+[node name="InteractRay" type="RayCast2D" parent="."]
+target_position = Vector2(17, 0)
+collision_mask = 4
+collide_with_areas = true

@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://hi1ad8hkln8l"]
+
+[ext_resource type="Texture2D" uid="uid://4jeulpiat0yl" path="res://assets/iso_tiles.aseprite" id="1_yo4e4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jxrq4"]
+atlas = ExtResource("1_yo4e4")
+region = Rect2(64, 0, 32, 32)
+
+[node name="HighlightSquare" type="Area2D"]
+y_sort_enabled = true
+
+[node name="TextureRect" type="Sprite2D" parent="."]
+y_sort_enabled = true
+texture = SubResource("AtlasTexture_jxrq4")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-13, -8, 0, -15, 13, -8, 0, -1)

@@ -1,0 +1,51 @@
+[gd_scene load_steps=12 format=3 uid="uid://4g07xnpwmo8j"]
+
+[ext_resource type="Script" path="res://scripts/level.gd" id="1_nrfdk"]
+[ext_resource type="PackedScene" uid="uid://dvgrs2m7skky1" path="res://scenes/tilemap.tscn" id="2_qa0yh"]
+[ext_resource type="PackedScene" uid="uid://b5nph7ryuc3rc" path="res://scenes/player.tscn" id="3_wlr1w"]
+[ext_resource type="Resource" uid="uid://basmht2gja474" path="res://scripts/inventory/test_inv.tres" id="4_huxmo"]
+[ext_resource type="Script" path="res://scripts/highlight_interface.gd" id="5_u5pwq"]
+[ext_resource type="PackedScene" uid="uid://c7jx4m0xdwsn0" path="res://scenes/test_object.tscn" id="6_d7h38"]
+[ext_resource type="Script" path="res://scripts/inventory/inventory_data.gd" id="7_3glkd"]
+[ext_resource type="Resource" uid="uid://c2mdkafvo8aya" path="res://scripts/items/item_resources/stone.tres" id="8_1f7wh"]
+[ext_resource type="Script" path="res://scripts/inventory/slot_data.gd" id="9_6lxm8"]
+
+[sub_resource type="Resource" id="Resource_emefw"]
+script = ExtResource("9_6lxm8")
+item_data = ExtResource("8_1f7wh")
+quantity = 1
+
+[sub_resource type="Resource" id="Resource_g1ubv"]
+script = ExtResource("7_3glkd")
+slot_datas = Array[ExtResource("9_6lxm8")]([SubResource("Resource_emefw")])
+
+[node name="Level" type="Node2D"]
+y_sort_enabled = true
+script = ExtResource("1_nrfdk")
+
+[node name="Tilemap" parent="." instance=ExtResource("2_qa0yh")]
+y_sort_enabled = true
+
+[node name="Player" parent="." instance=ExtResource("3_wlr1w")]
+z_index = 1
+z_as_relative = false
+y_sort_enabled = true
+position = Vector2(129, 153)
+scale = Vector2(0.998514, 0.998235)
+disable_mode = 1
+collision_layer = 5
+movement_range = 2
+inventory_data = ExtResource("4_huxmo")
+
+[node name="HighlightInterface" type="Node2D" parent="."]
+top_level = true
+y_sort_enabled = true
+script = ExtResource("5_u5pwq")
+
+[node name="Coral1" parent="." groups=["external_inventory"] instance=ExtResource("6_d7h38")]
+visible = false
+z_index = 1
+y_sort_enabled = true
+position = Vector2(168, 63)
+collision_mask = 1
+inventory_data = SubResource("Resource_g1ubv")
