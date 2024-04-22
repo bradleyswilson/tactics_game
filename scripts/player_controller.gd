@@ -7,9 +7,11 @@ var current_id_path: Array[Vector2i]
 var target_position: Vector2
 var astar_grid = AStarGrid2D.new()
 var is_moving: bool
+var iso_offset: Vector2i
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	iso_offset = tilemap.get_used_rect().position * -1
 	astar_grid.region = Rect2i(0, 0, 480, 270)
 	astar_grid.cell_size = Vector2i(32,16)
 	astar_grid.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_NEVER
@@ -23,12 +25,12 @@ func on_player_move() -> void:
 	if is_moving:
 		id_path = astar_grid.get_id_path(
 			tilemap.local_to_map(target_position),
-			tilemap.local_to_map(get_global_mouse_position()) + Globals.iso_offset
+			tilemap.local_to_map(get_global_mouse_position()) + iso_offset
 	)
 	else:
 		id_path = astar_grid.get_id_path(
-			tilemap.local_to_map(Globals.player_pos) + Globals.iso_offset,
-			tilemap.local_to_map(get_global_mouse_position()) + Globals.iso_offset
+			tilemap.local_to_map(Globals.player_pos) + iso_offset,
+			tilemap.local_to_map(get_global_mouse_position()) + iso_offset
 		).slice(1)
 		if len(id_path) > player.movement_range:
 			print('exceeds movement range!')
@@ -42,7 +44,7 @@ func _process(delta):
 		return
 	
 	if is_moving == false:
-		target_position = tilemap.map_to_local(current_id_path.front() - Globals.iso_offset) + Vector2(0, -8)
+		target_position = tilemap.map_to_local(current_id_path.front() - iso_offset) + Vector2(0, -8)
 		print(target_position)
 		is_moving = true
 	
@@ -52,6 +54,6 @@ func _process(delta):
 		current_id_path.pop_front()
 		
 		if current_id_path.is_empty() == false:
-			target_position = tilemap.map_to_local(current_id_path.front() - Globals.iso_offset) + Vector2(0, -8)
+			target_position = tilemap.map_to_local(current_id_path.front() - iso_offset) + Vector2(0, -8)
 		else:
 			is_moving = false

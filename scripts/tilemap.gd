@@ -22,7 +22,9 @@ func _tile_data_runtime_update(layer: int, coords: Vector2i, tile_data: TileData
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass
+	var cells = get_used_rect()
+	print(cells.position)
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 
 func _process(delta):
@@ -30,4 +32,6 @@ func _process(delta):
 	var player_loc = local_to_map(Globals.player_pos)
 	selected_tile = map_to_local(tile)
 	player_tile = map_to_local(player_loc)
+
+
 
