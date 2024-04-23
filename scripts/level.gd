@@ -4,20 +4,35 @@ class_name LevelParent
 @onready var player: CharacterBody2D = $Player
 @onready var tilemap = $Tilemap
 @onready var highlight_interface = $HighlightInterface
+@onready var can_cast: bool
 
 var offset_x = Vector2(-32,-16)
 var offset_y = Vector2(32, -16)
 
 func _ready():
-	player.move.connect(on_player_move)
-	
-func on_player_move() -> void:
-	print('received')
+	can_cast = false
+	player.ability.connect(on_ability_button_pressed)
+	player.confirm.connect(on_confirm)
+	Globals.player_pos = player.global_position # set original play pos
+
+# on_spell_cast()
+# show range - togglable
+# confirm cast (toggles off range indicator)
+# cast
+#
+func on_ability_button_pressed() -> void:
 	var range = player.movement_range
 
 	if highlight_interface.hidden: 
 		highlight_interface.visible = not highlight_interface.visible
+		can_cast = not can_cast
 		show_range(range, tilemap.player_tile)
+		
+func on_confirm() -> void:
+	if can_cast:
+		if tilemap.set_movement_coords(player, Globals.player_pos):
+			highlight_interface.visible = not highlight_interface.visible
+			can_cast = not can_cast
 		
 func show_range(movement_range: int, source_loc: Vector2):
 	var Square = preload("res://scenes/highlight_square.tscn")

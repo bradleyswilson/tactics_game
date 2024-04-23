@@ -7,9 +7,9 @@ class_name Entity
 @onready var interact_ray = $InteractRay
 @onready var animated_sprite = $AnimatedSprite
 
-signal move()
+signal ability()
 signal toggle_inventory()
-
+signal confirm()
 	
 func get_input():
 	velocity = Vector2.ZERO
@@ -31,7 +31,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		interact()
 		
 	if Input.is_action_just_pressed("move_click"):
-		move.emit()
+		ability.emit()
+	
+	if Input.is_action_just_pressed("confirm_click"):
+		confirm.emit()
 
 func interact() -> void:
 	if interact_ray.is_colliding():
