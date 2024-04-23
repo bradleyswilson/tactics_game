@@ -2,10 +2,12 @@ extends Node
 
 @onready var player: CharacterBody2D = $Level/Player
 @onready var inventory_interface: Control = $UI/InventoryInterface
+@onready var action_bar_interface = $UI/ActionBarInterface
 
 func _ready():
 	player.toggle_inventory.connect(toggle_inventory_interface)
 	inventory_interface.set_player_inventory_data(player.inventory_data)
+	action_bar_interface.set_player_abilities_data(player.abilities_data)
 
 	for node in get_tree().get_nodes_in_group("external_inventory"):
 		node.toggle_inventory.connect(toggle_inventory_interface)
