@@ -8,6 +8,7 @@ script = ExtResource("1_uvih8")
 ability_name = "Ice"
 ability_type = "RangedAOE"
 ability_damage = 1.0
+ability_range = 5
 cooldown = 2.0
 name = "Ice Blast"
 description = "Shoot some ice"

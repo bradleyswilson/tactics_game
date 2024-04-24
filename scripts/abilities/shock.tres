@@ -1,17 +1,18 @@
 [gd_resource type="Resource" script_class="AbilityData" load_steps=4 format=3 uid="uid://bjk6lerd00wg4"]
 
-[ext_resource type="Script" path="res://scripts/abilities/ability_data.gd" id="1_2hlxc"]
-[ext_resource type="Texture2D" uid="uid://ccpmt16pip72o" path="res://assets/icons.png" id="2_lu71k"]
+[ext_resource type="Script" path="res://scripts/abilities/ability_data.gd" id="1_ghgu1"]
+[ext_resource type="Texture2D" uid="uid://ccpmt16pip72o" path="res://assets/icons.png" id="2_7bduk"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_u0gm4"]
-atlas = ExtResource("2_lu71k")
+atlas = ExtResource("2_7bduk")
 region = Rect2(256, 0, 32, 32)
 
 [resource]
-script = ExtResource("1_2hlxc")
+script = ExtResource("1_ghgu1")
 ability_name = "Godot"
 ability_type = "RangedAOE"
 ability_damage = 1000.0
+ability_range = 3
 cooldown = 5.0
 name = "Spark"
 description = "Cast lightning"

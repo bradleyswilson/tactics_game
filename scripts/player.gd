@@ -8,7 +8,7 @@ class_name Entity
 @onready var interact_ray = $InteractRay
 @onready var animated_sprite = $AnimatedSprite
 
-signal ability()
+signal ability(movement_range: int)
 signal toggle_inventory()
 signal confirm()
 	
@@ -32,7 +32,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		interact()
 		
 	if Input.is_action_just_pressed("move_click"):
-		ability.emit()
+		ability.emit(movement_range)
 	
 	if Input.is_action_just_pressed("confirm_click"):
 		confirm.emit()

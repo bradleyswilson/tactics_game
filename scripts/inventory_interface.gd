@@ -34,7 +34,7 @@ func set_player_inventory_data(inventory_data: InventoryData) -> void:
 
 func on_inventory_interact(inventory_data: InventoryData, 
 		index: int, button: int) -> void:
-	
+	print(index)
 	match [grabbed_slot_data, button]:
 		[null, MOUSE_BUTTON_LEFT]:
 			grabbed_slot_data = inventory_data.grab_slot_data(index)

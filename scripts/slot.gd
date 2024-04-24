@@ -26,10 +26,9 @@ func _on_gui_input(event) -> void:
 			or event.button_index == MOUSE_BUTTON_RIGHT) \
 			and event.is_pressed():
 		slot_clicked.emit(get_index(), event.button_index)
-		
-func _unhandled_input(event) -> void:
+	
+func _unhandled_key_input(event) -> void:
 	if event is InputEventKey and event.is_pressed():
-		var index = event.keycode - 48
-		slot_pressed.emit(index)
+		slot_pressed.emit(get_index())
 
 		

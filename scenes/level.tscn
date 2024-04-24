@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://4g07xnpwmo8j"]
+[gd_scene load_steps=8 format=3 uid="uid://4g07xnpwmo8j"]
 
 [ext_resource type="Script" path="res://scripts/level.gd" id="1_nrfdk"]
 [ext_resource type="PackedScene" uid="uid://dvgrs2m7skky1" path="res://scenes/tilemap.tscn" id="2_qa0yh"]
@@ -6,6 +6,7 @@
 [ext_resource type="Resource" uid="uid://basmht2gja474" path="res://scripts/inventory/test_inv.tres" id="4_huxmo"]
 [ext_resource type="Resource" uid="uid://de5lmqmeax2t7" path="res://scripts/actionbar/test_actionbar.tres" id="5_2qdi1"]
 [ext_resource type="Script" path="res://scripts/highlight_interface.gd" id="5_u5pwq"]
+[ext_resource type="Script" path="res://scripts/spell_manager.gd" id="7_6blyn"]
 
 [node name="Level" type="Node2D"]
 y_sort_enabled = true
@@ -30,3 +31,6 @@ visible = false
 top_level = true
 y_sort_enabled = true
 script = ExtResource("5_u5pwq")
+
+[node name="SpellManager" type="Node2D" parent="."]
+script = ExtResource("7_6blyn")
