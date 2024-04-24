@@ -2,15 +2,16 @@ extends CharacterBody2D
 class_name Entity
 
 @export var speed = 200
-@export var movement_range = 4
+@export var move_data: AbilityData
 @export var inventory_data: InventoryData
 @export var action_bar_data: InventoryData
 @onready var interact_ray = $InteractRay
 @onready var animated_sprite = $AnimatedSprite
+@onready var movement_range = move_data.ability_range
 
-signal ability(movement_range: int)
+signal move(Ab)
 signal toggle_inventory()
-signal confirm()
+#signal ability_confirm(ability_name: String)
 	
 func get_input():
 	velocity = Vector2.ZERO
@@ -32,10 +33,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		interact()
 		
 	if Input.is_action_just_pressed("move_click"):
-		ability.emit(movement_range)
-	
-	if Input.is_action_just_pressed("confirm_click"):
-		confirm.emit()
+		move.emit(move_data)
+		
 
 func interact() -> void:
 	if interact_ray.is_colliding():

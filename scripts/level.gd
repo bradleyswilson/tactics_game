@@ -7,23 +7,37 @@ class_name LevelParent
 @onready var can_cast: bool
 @onready var spell_manager = $SpellManager
 
+var casting_ability: AbilityData
+
+	
 func _ready():
 	can_cast = false
-	player.ability.connect(_on_show_range)
-	player.confirm.connect(on_confirm)
 	Globals.player_pos = player.global_position # set original play pos
+	player.move.connect(_on_show_range)
 	spell_manager.show_range.connect(_on_show_range)
+	spell_manager.ability_confirm.connect(_on_ability_confirm)
+	#player.ability_confirm.connect(_on_ability_confirm)
 
-func _on_show_range(range: int) -> void:
 
-	if highlight_interface.hidden: 
-		highlight_interface.visible = not highlight_interface.visible
-		can_cast = not can_cast
-		highlight_interface.show_range(range, tilemap.player_tile)
+# if its hidden, turns visible
+
+func _on_show_range(ability_data: AbilityData) -> void:
+	var range = ability_data.ability_range
+	highlight_interface.visible = not highlight_interface.visible
+	highlight_interface.show_range(range, tilemap.player_tile)
 	
-func on_confirm() -> void:
-	if can_cast:
-		if tilemap.set_movement_coords(player, Globals.player_pos):
-			highlight_interface.visible = not highlight_interface.visible
-			can_cast = not can_cast
-		
+	if highlight_interface.visible:
+		casting_ability = ability_data
+	else:
+		casting_ability = null
+
+# doesn't handle when player clicks outside valid range for other spells yet
+func _on_ability_confirm() -> void:
+	if casting_ability != null:
+		match [casting_ability.ability_type]:
+			["player_movement"]:
+				if tilemap.set_movement_coords(player, Globals.player_pos):
+					highlight_interface.visible = not highlight_interface.visible
+			[_]:
+				print("casting_ability")
+				highlight_interface.visible = not highlight_interface.visible

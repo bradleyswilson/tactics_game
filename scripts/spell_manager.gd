@@ -1,20 +1,25 @@
 extends Node2D
 
 var grabbed_ability: SlotData
+var ability_data: ItemData
 
-signal show_range(range: int)
+signal show_range(AbilityData)
+signal ability_confirm(ability_name: String)
 
+# on ability used
+# show range (toggleable)
 func on_ability_used(ability_datas: InventoryData, index: int) -> void:
-	var grabbed_ability = ability_datas.grab_ability_data(index)
-	var ability_data = grabbed_ability.item_data
+	grabbed_ability = ability_datas.grab_ability_data(index)
+	ability_data = grabbed_ability.item_data
 	match [ability_data.ability_type]:
 		["RangedAOE"]:
-			show_range.emit(ability_data.ability_range)
-
-			# Show range indicator
+			show_range.emit(ability_data)
+			
 			#create_spell(spell_pos, grabbed_spell_data)
 
-
+func _unhandled_input(event: InputEvent) -> void:
+	if Input.is_action_just_pressed("confirm_click"):
+		ability_confirm.emit()
 #
 #var ranged_st_spell = preload('res://scenes/spells/ranged_single_target.tscn')
 #func create_spell(pos, spell_data: SpellData):

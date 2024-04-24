@@ -9,7 +9,7 @@ region = Rect2(256, 0, 32, 32)
 
 [resource]
 script = ExtResource("1_ghgu1")
-ability_name = "Godot"
+ability_name = "Spark"
 ability_type = "RangedAOE"
 ability_damage = 1000.0
 ability_range = 3
