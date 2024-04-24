@@ -13,4 +13,7 @@ ability_name = "Godot"
 ability_type = "RangedAOE"
 ability_damage = 1000.0
 cooldown = 5.0
+name = "Spark"
+description = "Cast lightning"
+stackable = false
 texture = SubResource("AtlasTexture_u0gm4")

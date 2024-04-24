@@ -4,7 +4,7 @@ class_name Entity
 @export var speed = 200
 @export var movement_range = 4
 @export var inventory_data: InventoryData
-@export var abilities_data: AbilitiesData
+@export var action_bar_data: InventoryData
 @onready var interact_ray = $InteractRay
 @onready var animated_sprite = $AnimatedSprite
 

@@ -14,10 +14,10 @@ extends Control
 func _ready():
 	pass#inventory_data.inventory_interact.connect(on_inventory_interact)
 		
-func set_player_abilities_data(abilities_data: AbilitiesData) -> void:
-	abilities_data.ability_use.connect(on_ability_use)
-	action_bar.set_ability_data(abilities_data)
+func set_player_action_bar_data(action_bar_data: ActionBarData) -> void:
+	action_bar_data.ability_use.connect(on_ability_use)
+	action_bar.set_ability_data(action_bar_data)
 
-func on_ability_use(abilities_data: AbilitiesData, index: int) -> void:
+func on_ability_use(action_bar_data: ActionBarData, index: int) -> void:
 	print('connected')
 

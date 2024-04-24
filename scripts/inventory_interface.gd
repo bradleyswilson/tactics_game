@@ -3,8 +3,8 @@ extends Control
 var grabbed_slot_data: SlotData
 var external_inventory_owner
 
+@onready var grabbed_slot = $GrabbedSlot
 @onready var player_inventory: PanelContainer = $PlayerInventory
-@onready var grabbed_slot: PanelContainer = $GrabbedSlot
 @onready var external_inventory = $ExternalInventory
 
 func _physics_process(delta: float) -> void:
@@ -52,3 +52,4 @@ func update_grabbed_slot() -> void:
 		grabbed_slot.set_slot_data(grabbed_slot_data)
 	else:
 		grabbed_slot.hide()
+
