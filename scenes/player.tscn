@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://b5nph7ryuc3rc"]
+[gd_scene load_steps=8 format=3 uid="uid://b5nph7ryuc3rc"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_jyxtc"]
-[ext_resource type="Resource" uid="uid://basmht2gja474" path="res://scripts/inventory/test_inv.tres" id="2_jbhs2"]
-[ext_resource type="Resource" uid="uid://b5cjgks1h1g1y" path="res://scripts/abilities/move.tres" id="2_lp21y"]
+[ext_resource type="Resource" uid="uid://b5cjgks1h1g1y" path="res://scripts/abilities/move.tres" id="2_i6m5t"]
 [ext_resource type="Texture2D" uid="uid://biuu22dgoufbv" path="res://assets/iso_diver_front.aseprite" id="3_867jv"]
+[ext_resource type="Resource" uid="uid://basmht2gja474" path="res://scripts/inventory/test_inv.tres" id="3_of7vw"]
+[ext_resource type="Resource" uid="uid://de5lmqmeax2t7" path="res://scripts/actionbar/test_actionbar.tres" id="4_fbahv"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_l603a"]
 animations = [{
@@ -23,8 +24,9 @@ height = 10.0
 [node name="Player" type="CharacterBody2D"]
 motion_mode = 1
 script = ExtResource("1_jyxtc")
-move_data = ExtResource("2_lp21y")
-action_bar_data = ExtResource("2_jbhs2")
+move_data = ExtResource("2_i6m5t")
+inventory_data = ExtResource("3_of7vw")
+action_bar_data = ExtResource("4_fbahv")
 
 [node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
 texture_filter = 1

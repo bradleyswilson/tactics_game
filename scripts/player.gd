@@ -1,17 +1,14 @@
-extends CharacterBody2D
-class_name Entity
+extends Entity
 
-@export var speed = 200
-@export var move_data: AbilityData
-@export var inventory_data: InventoryData
-@export var action_bar_data: InventoryData
 @onready var interact_ray = $InteractRay
 @onready var animated_sprite = $AnimatedSprite
-@onready var movement_range = move_data.ability_range
 
-signal move(Ab)
+signal move(AbilityData)
 signal toggle_inventory()
 #signal ability_confirm(ability_name: String)
+	
+func ready():
+	health = 100
 	
 func get_input():
 	velocity = Vector2.ZERO

@@ -14,13 +14,18 @@ func on_ability_used(ability_datas: InventoryData, index: int) -> void:
 	match [ability_data.ability_type]:
 		["RangedAOE"]:
 			show_range.emit(ability_data)
-			
+	
 			#create_spell(spell_pos, grabbed_spell_data)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("confirm_click"):
 		ability_confirm.emit()
 #
+
+			
+
+			
+
 #var ranged_st_spell = preload('res://scenes/spells/ranged_single_target.tscn')
 #func create_spell(pos, spell_data: SpellData):
 	#var _spell = ranged_st_spell.instantiate()
