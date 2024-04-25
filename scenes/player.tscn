@@ -1,21 +1,12 @@
-[gd_scene load_steps=8 format=3 uid="uid://b5nph7ryuc3rc"]
+[gd_scene load_steps=7 format=3 uid="uid://b5nph7ryuc3rc"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_jyxtc"]
-[ext_resource type="Texture2D" uid="uid://dqvuoirg3uvv" path="res://assets/iso_diver_back.aseprite" id="2_0p22m"]
 [ext_resource type="Resource" uid="uid://basmht2gja474" path="res://scripts/inventory/test_inv.tres" id="2_jbhs2"]
 [ext_resource type="Resource" uid="uid://b5cjgks1h1g1y" path="res://scripts/abilities/move.tres" id="2_lp21y"]
 [ext_resource type="Texture2D" uid="uid://biuu22dgoufbv" path="res://assets/iso_diver_front.aseprite" id="3_867jv"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_l603a"]
 animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("2_0p22m")
-}],
-"loop": true,
-"name": &"back",
-"speed": 5.0
-}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("3_867jv")
@@ -39,7 +30,8 @@ action_bar_data = ExtResource("2_jbhs2")
 texture_filter = 1
 texture_repeat = 1
 sprite_frames = SubResource("SpriteFrames_l603a")
-animation = &"back"
+animation = &"front"
+flip_h = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 8)

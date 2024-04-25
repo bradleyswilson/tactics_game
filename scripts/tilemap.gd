@@ -52,7 +52,13 @@ func set_movement_coords(entity: Entity, pos: Vector2) -> bool:
 		return true
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
+# this could probably be 'snapshots' instead of in process
+
+	#if player_loc == Vector2i(10, 7):
+	#	print('entered target tile')
+		
 func _process(delta):
+	
 	var tile = local_to_map(get_global_mouse_position())
 	var player_loc = local_to_map(Globals.player_pos)
 	selected_tile = map_to_local(tile)

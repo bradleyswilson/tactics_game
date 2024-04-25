@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://4g07xnpwmo8j"]
+[gd_scene load_steps=9 format=3 uid="uid://4g07xnpwmo8j"]
 
 [ext_resource type="Script" path="res://scripts/level.gd" id="1_nrfdk"]
 [ext_resource type="PackedScene" uid="uid://dvgrs2m7skky1" path="res://scenes/tilemap.tscn" id="2_qa0yh"]
+[ext_resource type="PackedScene" uid="uid://bqf8ct6iht8er" path="res://scenes/enemy.tscn" id="3_jc8fg"]
 [ext_resource type="PackedScene" uid="uid://b5nph7ryuc3rc" path="res://scenes/player.tscn" id="3_wlr1w"]
 [ext_resource type="Resource" uid="uid://basmht2gja474" path="res://scripts/inventory/test_inv.tres" id="4_huxmo"]
 [ext_resource type="Resource" uid="uid://de5lmqmeax2t7" path="res://scripts/actionbar/test_actionbar.tres" id="5_2qdi1"]
@@ -15,6 +16,12 @@ script = ExtResource("1_nrfdk")
 [node name="Tilemap" parent="." instance=ExtResource("2_qa0yh")]
 y_sort_enabled = true
 
+[node name="Enemy" parent="." instance=ExtResource("3_jc8fg")]
+z_index = 1
+y_sort_enabled = true
+texture_filter = 1
+position = Vector2(350, 120)
+
 [node name="Player" parent="." groups=["moveable_entities"] instance=ExtResource("3_wlr1w")]
 z_index = 1
 z_as_relative = false
@@ -27,10 +34,14 @@ inventory_data = ExtResource("4_huxmo")
 action_bar_data = ExtResource("5_2qdi1")
 
 [node name="HighlightInterface" type="Node2D" parent="."]
-visible = false
 top_level = true
 y_sort_enabled = true
 script = ExtResource("5_u5pwq")
+
+[node name="Cursor" type="Node2D" parent="HighlightInterface"]
+
+[node name="Abilities" type="Node2D" parent="HighlightInterface"]
+visible = false
 
 [node name="SpellManager" type="Node2D" parent="."]
 script = ExtResource("7_6blyn")
