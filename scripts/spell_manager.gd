@@ -3,8 +3,8 @@ extends Node2D
 var grabbed_ability: SlotData
 var ability_data: ItemData
 
-signal show_range(AbilityData)
-signal ability_confirm(ability_name: String)
+signal show_range(ability_data: AbilityData)
+signal ability_confirm()
 
 # on ability used
 # show range (toggleable)
