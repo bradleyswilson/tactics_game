@@ -18,7 +18,7 @@ y_sort_enabled = true
 z_index = 1
 y_sort_enabled = true
 texture_filter = 1
-position = Vector2(350, 120)
+position = Vector2(353, 142)
 
 [node name="Player" parent="." groups=["moveable_entities"] instance=ExtResource("3_wlr1w")]
 z_index = 1
