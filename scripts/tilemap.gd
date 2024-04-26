@@ -1,7 +1,10 @@
 extends TileMap
 
-var selected_tile
-var player_tile
+@export var selected_tile_map: Vector2i
+@export var selected_tile_loc: Vector2i
+@export var player_tile_map: Vector2i
+@export var player_tile_loc: Vector2i
+
 var id_path: Array[Vector2i]
 var target_position: Vector2
 var astar_grid = AStarGrid2D.new()
@@ -37,14 +40,14 @@ func _ready():
 	
 	
 func set_movement_coords(entity: Entity, pos: Vector2) -> bool:
-	var range = entity.movement_range
+	var range = entity.move_data.ability_range
 
 	id_path = astar_grid.get_id_path(
 			local_to_map(pos) + iso_offset,
 			local_to_map(get_global_mouse_position()) + iso_offset
 			).slice(1)
 			
-	if len(id_path) > entity.movement_range:
+	if len(id_path) > entity.move_data.ability_range:
 		print('exceeds movement range!')
 		id_path = []
 		return false
@@ -58,11 +61,10 @@ func set_movement_coords(entity: Entity, pos: Vector2) -> bool:
 	#	print('entered target tile')
 		
 func _process(delta):
-	
-	var tile = local_to_map(get_global_mouse_position())
-	var player_loc = local_to_map(Globals.player_pos)
-	selected_tile = map_to_local(tile)
-	player_tile = map_to_local(player_loc)
+	selected_tile_map = local_to_map(get_global_mouse_position())
+	player_tile_map = local_to_map(Globals.player_pos)
+	selected_tile_loc = map_to_local(selected_tile_map)
+	player_tile_loc = map_to_local(player_tile_map)
 
 	if id_path.is_empty():
 		return

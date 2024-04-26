@@ -1,11 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://4g07xnpwmo8j"]
+[gd_scene load_steps=7 format=3 uid="uid://4g07xnpwmo8j"]
 
 [ext_resource type="Script" path="res://scripts/level.gd" id="1_nrfdk"]
 [ext_resource type="PackedScene" uid="uid://dvgrs2m7skky1" path="res://scenes/tilemap.tscn" id="2_qa0yh"]
 [ext_resource type="PackedScene" uid="uid://bqf8ct6iht8er" path="res://scenes/enemy.tscn" id="3_jc8fg"]
 [ext_resource type="PackedScene" uid="uid://b5nph7ryuc3rc" path="res://scenes/player.tscn" id="3_wlr1w"]
-[ext_resource type="Resource" uid="uid://basmht2gja474" path="res://scripts/inventory/test_inv.tres" id="4_huxmo"]
-[ext_resource type="Resource" uid="uid://de5lmqmeax2t7" path="res://scripts/actionbar/test_actionbar.tres" id="5_2qdi1"]
 [ext_resource type="Script" path="res://scripts/highlight_interface.gd" id="5_u5pwq"]
 [ext_resource type="Script" path="res://scripts/spell_manager.gd" id="7_6blyn"]
 
@@ -20,7 +18,7 @@ y_sort_enabled = true
 z_index = 1
 y_sort_enabled = true
 texture_filter = 1
-position = Vector2(350, 120)
+position = Vector2(353, 142)
 
 [node name="Player" parent="." groups=["moveable_entities"] instance=ExtResource("3_wlr1w")]
 z_index = 1
@@ -30,10 +28,9 @@ position = Vector2(129, 153)
 scale = Vector2(0.998514, 0.998235)
 disable_mode = 1
 collision_layer = 5
-inventory_data = ExtResource("4_huxmo")
-action_bar_data = ExtResource("5_2qdi1")
 
 [node name="SpellManager" type="Node2D" parent="."]
+top_level = true
 script = ExtResource("7_6blyn")
 
 [node name="HighlightInterface" type="Node2D" parent="."]

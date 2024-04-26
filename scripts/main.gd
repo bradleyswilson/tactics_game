@@ -9,9 +9,7 @@ func _ready():
 	player.toggle_inventory.connect(toggle_inventory_interface)
 	inventory_interface.set_player_inventory_data(player.inventory_data)
 	action_bar.set_player_ability_data(player.action_bar_data)
-	
 	player.action_bar_data.ability_used.connect(spell_manager.on_ability_used)
-
 	
 	for node in get_tree().get_nodes_in_group("external_inventory"):
 		node.toggle_inventory.connect(toggle_inventory_interface)
