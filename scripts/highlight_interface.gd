@@ -13,6 +13,8 @@ func _ready():
 
 func show_cursor(source_loc: Vector2):
 	cursor_square.global_position = source_loc
+	cursor_square.modulate = Color(0,0,1)
+	cursor_square.top_level = true
 
 func show_range(movement_range: int, source_loc: Vector2):
 	# Clear existing children from the highlight interface, if needed
@@ -27,7 +29,7 @@ func show_range(movement_range: int, source_loc: Vector2):
 				var pos_x = dx * offset_x.x * 0.5  + dy * offset_y.x * 0.5
 				var pos_y = dx * offset_x.y * 0.5  + dy * offset_y.y * 0.5
 				square.global_position = source_loc - Vector2(0, -8) +  Vector2(pos_x, pos_y)
-	
+				
 	if not abilities.visible:
 		for n in abilities.get_children():
 			n.queue_free()

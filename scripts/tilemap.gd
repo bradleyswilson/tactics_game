@@ -5,10 +5,9 @@ extends TileMap
 @export var player_tile_map: Vector2i
 @export var player_tile_loc: Vector2i
 
-var id_path: Array[Vector2i]
+var ability_path: Array[Vector2i]
 var target_position: Vector2
 var astar_grid = AStarGrid2D.new()
-var is_moving: bool
 var iso_offset: Vector2i
 
 signal move_success()
@@ -38,27 +37,33 @@ func _ready():
 	astar_grid.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_NEVER
 	astar_grid.update()
 	
-	
-func set_movement_coords(entity: Entity, pos: Vector2) -> bool:
-	var range = entity.move_data.ability_range
+func check_range(ability_data: AbilityData, pos: Vector2) -> bool:
+	var range = ability_data.ability_range
 
-	id_path = astar_grid.get_id_path(
+	ability_path = astar_grid.get_id_path(
 			local_to_map(pos) + iso_offset,
 			local_to_map(get_global_mouse_position()) + iso_offset
 			).slice(1)
 			
-	if len(id_path) > entity.move_data.ability_range:
-		print('exceeds movement range!')
-		id_path = []
+	if len(ability_path) > range or ability_data.ability_name != 'move':
+		ability_path = []
 		return false
 	else:
 		return true
 	
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-# this could probably be 'snapshots' instead of in process
-
-	#if player_loc == Vector2i(10, 7):
-	#	print('entered target tile')
+func move_entity():
+	target_position = map_to_local(ability_path.front() - iso_offset) + Vector2(0, -8)
+	player.global_position = player.global_position.move_toward(target_position, 1)
+	
+	if player.global_position == target_position:
+		ability_path.pop_front()
+		player.global_position = player.global_position.move_toward(target_position, 1)
+		
+		if not ability_path.is_empty():
+			target_position = map_to_local(ability_path.front() - iso_offset) + Vector2(0, -8)
+		else:
+			Globals.player_pos = player.global_position
+			return
 		
 func _process(delta):
 	selected_tile_map = local_to_map(get_global_mouse_position())
@@ -66,19 +71,7 @@ func _process(delta):
 	selected_tile_loc = map_to_local(selected_tile_map)
 	player_tile_loc = map_to_local(player_tile_map)
 
-	if id_path.is_empty():
+	if ability_path.is_empty():
 		return
-	target_position = map_to_local(id_path.front() - iso_offset) + Vector2(0, -8)
-	player.global_position = player.global_position.move_toward(target_position, 1)
-	
-	if player.global_position == target_position:
-		id_path.pop_front()
-		player.global_position = player.global_position.move_toward(target_position, 1)
-		
-		if not id_path.is_empty():
-			target_position = map_to_local(id_path.front() - iso_offset) + Vector2(0, -8)
-		else:
-			Globals.player_pos = player.global_position
-			return
-
-
+	else:
+		move_entity()

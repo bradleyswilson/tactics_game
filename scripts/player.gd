@@ -7,8 +7,9 @@ signal move(AbilityData)
 signal toggle_inventory()
 #signal ability_confirm(ability_name: String)
 	
-func ready():
+func _ready():
 	health = 100
+	move_data.ability_range = 5
 	
 func get_input():
 	velocity = Vector2.ZERO

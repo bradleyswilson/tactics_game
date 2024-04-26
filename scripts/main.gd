@@ -4,6 +4,7 @@ extends Node
 @onready var inventory_interface: Control = $UI/InventoryInterface
 @onready var action_bar = $UI/ActionBar
 @onready var spell_manager = $Level/SpellManager
+@onready var selected_target = $UI/SelectedTarget
 
 func _ready():
 	player.toggle_inventory.connect(toggle_inventory_interface)
@@ -26,3 +27,6 @@ func toggle_inventory_interface(external_inventory_owner = null) -> void:
 	else: 
 		inventory_interface.clear_external_inventory()
 
+func _on_level_body_selected(body):
+	if body:
+		selected_target.text = str('Enemy HP: ', body.health)
