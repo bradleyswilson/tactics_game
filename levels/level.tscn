@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://4g07xnpwmo8j"]
+[gd_scene load_steps=9 format=3 uid="uid://4g07xnpwmo8j"]
 
 [ext_resource type="Script" path="res://levels/level.gd" id="1_nrfdk"]
 [ext_resource type="PackedScene" uid="uid://dvgrs2m7skky1" path="res://tilemaps/tilemap.tscn" id="2_qa0yh"]
@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://b5nph7ryuc3rc" path="res://entities/player.tscn" id="4_80mmo"]
 [ext_resource type="Script" path="res://ui/highlight_interface.gd" id="5_u5pwq"]
 [ext_resource type="Script" path="res://abilities/spell_manager.gd" id="7_6blyn"]
+[ext_resource type="Script" path="res://turn_controller/turn_controller.gd" id="7_8cf6q"]
+[ext_resource type="Script" path="res://turn_controller/is_active_turn.gd" id="8_jos0q"]
 
 [node name="Level" type="Node2D"]
 y_sort_enabled = true
@@ -15,13 +17,9 @@ script = ExtResource("1_nrfdk")
 y_sort_enabled = true
 collision_visibility_mode = 0
 
-[node name="Enemy" parent="." instance=ExtResource("3_kn4a8")]
-z_index = 1
-y_sort_enabled = true
-texture_filter = 1
-position = Vector2(353, 142)
+[node name="Party" type="Node2D" parent="."]
 
-[node name="Player" parent="." groups=["moveable_entities"] instance=ExtResource("4_80mmo")]
+[node name="Player" parent="Party" groups=["moveable_entities"] instance=ExtResource("4_80mmo")]
 z_index = 1
 z_as_relative = false
 y_sort_enabled = true
@@ -29,6 +27,29 @@ position = Vector2(128, 152)
 scale = Vector2(0.998514, 0.998235)
 disable_mode = 1
 collision_layer = 5
+
+[node name="Player2" parent="Party" groups=["moveable_entities"] instance=ExtResource("4_80mmo")]
+z_index = 1
+z_as_relative = false
+y_sort_enabled = true
+position = Vector2(193, 90)
+scale = Vector2(0.998514, 0.998235)
+disable_mode = 1
+collision_layer = 5
+
+[node name="Enemies" type="Node2D" parent="."]
+
+[node name="Enemy" parent="Enemies" instance=ExtResource("3_kn4a8")]
+z_index = 1
+y_sort_enabled = true
+texture_filter = 1
+position = Vector2(353, 142)
+
+[node name="Enemy2" parent="Enemies" instance=ExtResource("3_kn4a8")]
+z_index = 1
+y_sort_enabled = true
+texture_filter = 1
+position = Vector2(353, 142)
 
 [node name="SpellManager" type="Node2D" parent="."]
 top_level = true
@@ -43,3 +64,9 @@ script = ExtResource("5_u5pwq")
 
 [node name="Abilities" type="Node2D" parent="HighlightInterface"]
 visible = false
+
+[node name="TurnManager" type="Node" parent="."]
+script = ExtResource("7_8cf6q")
+
+[node name="ActiveTurn" type="Node" parent="TurnManager"]
+script = ExtResource("8_jos0q")

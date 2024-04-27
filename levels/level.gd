@@ -1,13 +1,18 @@
 extends Node2D
 class_name LevelParent
 
-@onready var player: CharacterBody2D = $Player
-@onready var enemy = $Enemy
+@onready var player: CharacterBody2D = $Party/Player
+@onready var party = $Party.get_children()
+@onready var enemies = $Enemies.get_children()
+@onready var enemy = $Enemies/Enemy
 @onready var tilemap = $Tilemap
 @onready var highlight_interface = $HighlightInterface
 @onready var range_highlight = $HighlightInterface/Abilities
 @onready var spell_manager = $SpellManager
 @onready var active_entities: Array
+@onready var turn_manager = $TurnManager
+
+
 var selected_body
 var temp_body
 var casting_ability: AbilityData
@@ -16,14 +21,22 @@ signal ability_confirmed(ability_data: AbilityData)
 signal body_selected(body: Entity)
 
 func _ready():
-	active_entities = [player, enemy]
-	Globals.player_pos = player.global_position # set original play pos
+	
+	active_entities += party
+	active_entities += enemies
+	print(active_entities)
 	player.move.connect(_on_show_range)
 	spell_manager.show_range.connect(_on_show_range)
 	$HighlightInterface/Cursor.get_children()[0].highlight_entered.connect(on_body_entered)
 	$HighlightInterface/Cursor.get_children()[0].highlight_exited.connect(on_body_exited)
-
+	
+func _update():
+	turn_manager.turn_queue.assign(active_entities)
+	turn_manager.start_turn(active_entities[0])
+	
 func _input(event):
+	if event.is_action_pressed('start_battle'):
+		_update()
 	if event.is_action_released("confirm_click"):
 		selected_body = temp_body
 		_on_ability_confirm()
