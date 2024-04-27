@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="AbilityData" load_steps=3 format=3 uid="uid://ob1gmgy32i7l"]
+
+[ext_resource type="Script" path="res://abilities/ability_data.gd" id="1_uvih8"]
+[ext_resource type="Texture2D" uid="uid://duq5qjns7o6ww" path="res://items/item_atlas.tres" id="2_587h7"]
+
+[resource]
+script = ExtResource("1_uvih8")
+ability_name = "Ice"
+ability_type = "RangedAOE"
+ability_damage = 5.0
+ability_range = 5
+cooldown = 2.0
+name = "Ice Blast"
+description = "Shoot some ice"
+stackable = false
+texture = ExtResource("2_587h7")

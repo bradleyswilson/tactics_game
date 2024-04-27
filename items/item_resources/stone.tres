@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=4 format=3 uid="uid://c2mdkafvo8aya"]
+
+[ext_resource type="Script" path="res://items/item_data.gd" id="1_4rcs4"]
+[ext_resource type="Texture2D" uid="uid://ccpmt16pip72o" path="res://assets/icons.png" id="2_rjjjh"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l4dk1"]
+atlas = ExtResource("2_rjjjh")
+region = Rect2(32, 544, 32, 32)
+
+[resource]
+script = ExtResource("1_4rcs4")
+name = "Stone"
+description = "Some sea stone"
+stackable = true
+texture = SubResource("AtlasTexture_l4dk1")

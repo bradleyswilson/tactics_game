@@ -20,7 +20,7 @@ aseprite_executable_path="/Applications/Aseprite.app/Contents/MacOS/aseprite"
 
 [autoload]
 
-Globals="*res://scripts/globals.gd"
+Globals="*res://globals/globals.gd"
 
 [display]
 
