@@ -12,54 +12,58 @@ class_name LevelParent
 @onready var active_entities: Array
 @onready var turn_manager = $TurnManager
 
-
 var selected_body
 var temp_body
 var casting_ability: AbilityData
 
 signal ability_confirmed(ability_data: AbilityData)
-signal body_selected(body: Entity)
 
 func _ready():
-	
 	active_entities += party
 	active_entities += enemies
-	print(active_entities)
-	player.move.connect(_on_show_range)
-	spell_manager.show_range.connect(_on_show_range)
+	#TODO sort by initiative?
+	
+	$TurnManager/ActiveTurn.ability_used.connect(show_range)
 	$HighlightInterface/Cursor.get_children()[0].highlight_entered.connect(on_body_entered)
 	$HighlightInterface/Cursor.get_children()[0].highlight_exited.connect(on_body_exited)
 	
 func _update():
-	turn_manager.turn_queue.assign(active_entities)
+	Globals.turn_queue.assign(active_entities)
 	turn_manager.start_turn(active_entities[0])
+	UiBattle.battle_start()
 	
 func _input(event):
 	if event.is_action_pressed('start_battle'):
 		_update()
 	if event.is_action_released("confirm_click"):
-		selected_body = temp_body
+		selected_body = Globals.hover_entity
 		_on_ability_confirm()
 		
 func on_body_entered(body):
 	temp_body = body
+	if temp_body is Enemy:
+		Globals.hover_entity = temp_body
+		UiBattle.toggle_enemy_details(Globals.hover_entity)
 	
 func on_body_exited(body):
 	if temp_body == body:
 		temp_body = null
-
-func _physics_process(delta):
+		if Globals.hover_entity is Enemy:
+			UiBattle.toggle_enemy_details(Globals.hover_entity)
+			Globals.hover_entity = null
+			
+func _physics_process(_delta):
 	if tilemap.get_cell_tile_data(0,tilemap.selected_tile_map):
 		$HighlightInterface/Cursor.show()		
 		highlight_interface.show_cursor(tilemap.selected_tile_loc + Vector2i(0, 8)) 
 	else:
 		$HighlightInterface/Cursor.hide()
 		
-func _on_show_range(ability_data: AbilityData) -> void:
+func show_range(ability_data: AbilityData) -> void:
 	# turns on range indicators and sets ability data
-	var range = ability_data.ability_range
+	var ability_range = ability_data.ability_range
 	range_highlight.visible = not range_highlight.visible
-	highlight_interface.show_range(range, tilemap.player_tile_loc)
+	highlight_interface.show_range(ability_range, tilemap.player_tile_loc)
 	
 	for i in range_highlight.get_children():
 		if tilemap.get_cell_tile_data(0,  
@@ -71,7 +75,6 @@ func _on_show_range(ability_data: AbilityData) -> void:
 	else:
 		casting_ability = null
 
-#todo - doesn't handle when player clicks outside valid range for other spells yet
 func _on_ability_confirm() -> void:
 	# if a casted ability is loaded, matches ability type, checks range,
 	# and calls execute function
@@ -102,6 +105,6 @@ func ability_execute(casted_ability: AbilityData, cast_location: Vector2):
 			spell.global_position = cast_location - Vector2(0, -8)
 			spell.modulate = Color(0,1,0)
 			casted_ability._damage(casted_ability, selected_body)
-			body_selected.emit(selected_body)
+
 
 

@@ -1,9 +1,16 @@
-[gd_resource type="Resource" script_class="AbilityData" load_steps=2 format=3 uid="uid://b5cjgks1h1g1y"]
+[gd_resource type="Resource" script_class="AbilityData" load_steps=4 format=3 uid="uid://b5cjgks1h1g1y"]
 
-[ext_resource type="Script" path="res://abilities/ability_data.gd" id="1_0258j"]
+[ext_resource type="Script" path="res://abilities/ability_data.gd" id="1_7jrij"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_637jp"]
+load_path = "res://.godot/imported/icons.png-9638851efbee5517d4b4cd55f414e20f.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vl62f"]
+atlas = SubResource("CompressedTexture2D_637jp")
+region = Rect2(192, 64, 32, 32)
 
 [resource]
-script = ExtResource("1_0258j")
+script = ExtResource("1_7jrij")
 ability_name = "move"
 ability_type = "player_movement"
 ability_damage = 0.0
@@ -12,3 +19,4 @@ cooldown = 0.0
 name = "move"
 description = ""
 stackable = false
+texture = SubResource("AtlasTexture_vl62f")

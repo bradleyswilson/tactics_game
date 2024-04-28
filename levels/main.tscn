@@ -1,77 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://dqshwc4kq63g5"]
+[gd_scene load_steps=3 format=3 uid="uid://dqshwc4kq63g5"]
 
 [ext_resource type="Script" path="res://levels/main.gd" id="1_hx4j8"]
 [ext_resource type="PackedScene" uid="uid://4g07xnpwmo8j" path="res://levels/level.tscn" id="2_ggtlj"]
-[ext_resource type="Script" path="res://inventory/inventory_interface.gd" id="3_u1tub"]
-[ext_resource type="PackedScene" uid="uid://x28l3v8v8ovk" path="res://inventory/inventory.tscn" id="4_0n2np"]
-[ext_resource type="Script" path="res://inventory/inventory.gd" id="5_mb5lk"]
-[ext_resource type="PackedScene" uid="uid://dbk30btbuoaua" path="res://inventory/slot.tscn" id="6_juuyi"]
-[ext_resource type="PackedScene" uid="uid://ch5bney2vrcsy" path="res://actionbar/action_bar.tscn" id="7_4488l"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_hx4j8")
 
 [node name="Level" parent="." instance=ExtResource("2_ggtlj")]
-
-[node name="UI" type="CanvasLayer" parent="."]
-
-[node name="InventoryInterface" type="Control" parent="UI"]
-visible = false
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("3_u1tub")
-
-[node name="PlayerInventory" parent="UI/InventoryInterface" instance=ExtResource("4_0n2np")]
-layout_mode = 1
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_right = 16.0
-offset_bottom = 16.0
-grow_horizontal = 1
-grow_vertical = 1
-script = ExtResource("5_mb5lk")
-
-[node name="ExternalInventory" parent="UI/InventoryInterface" instance=ExtResource("4_0n2np")]
-visible = false
-layout_mode = 1
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 410.0
-offset_top = 114.0
-offset_right = 426.0
-offset_bottom = 130.0
-grow_horizontal = 1
-grow_vertical = 1
-
-[node name="GrabbedSlot" parent="UI/InventoryInterface" instance=ExtResource("6_juuyi")]
-visible = false
-modulate = Color(1, 1, 1, 0.462745)
-self_modulate = Color(1, 1, 1, 0)
-layout_mode = 0
-anchors_preset = 0
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 24.0
-offset_bottom = 24.0
-grow_horizontal = 1
-grow_vertical = 1
-
-[node name="ActionBar" parent="UI" instance=ExtResource("7_4488l")]
-
-[node name="SelectedTarget" type="RichTextLabel" parent="UI"]
-offset_left = 29.0
-offset_top = 19.0
-offset_right = 157.0
-offset_bottom = 47.0
-
-[connection signal="body_selected" from="Level" to="." method="_on_level_body_selected"]

@@ -10,7 +10,7 @@ signal ability_used(index: int)
 func set_button_data(button_data: AbilityData) -> void:
 	cooldown.max_value = button_data.cooldown
 	texture_normal = button_data.texture
-	timer.wait_time = button_data.cooldown
+	timer.text = "%d" % button_data.cooldown
 
 var change_key = "":
 	set(value):
@@ -25,15 +25,11 @@ var change_key = "":
  
 func _ready():
 	change_key = "1"
-	cooldown.max_value = timer.wait_time
+	cooldown.max_value = int(timer.text)
 	set_process(false)
  
-func _process(_delta):
-	time.text = "%3.1f" % timer.time_left
-	cooldown.value = timer.time_left
- 
 func _on_pressed():
-	timer.start()
+	#timer.start()
 	#disabled = true
 	set_process(true)
 	ability_used.emit(get_index())

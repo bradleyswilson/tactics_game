@@ -21,13 +21,12 @@ aseprite_executable_path="/Applications/Aseprite.app/Contents/MacOS/aseprite"
 [autoload]
 
 Globals="*res://globals/globals.gd"
+UiBattle="*res://ui/ui_battle.tscn"
 
 [display]
 
 window/size/viewport_width=480
 window/size/viewport_height=270
-window/size/mode=2
-window/size/initial_screen=3
 window/stretch/mode="viewport"
 window/stretch/scale_mode="integer"
 

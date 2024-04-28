@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=3 uid="uid://c1si0nxvgv6p4"]
+
+[ext_resource type="Script" path="res://ui/turn_order_display.gd" id="1_3nox1"]
+
+[node name="TurnOrderDisplay" type="Control"]
+layout_mode = 3
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_top = 5.0
+offset_bottom = 5.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+script = ExtResource("1_3nox1")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+grow_horizontal = 2
+theme_override_constants/separation = 0

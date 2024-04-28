@@ -24,10 +24,10 @@ enum layers{
 const highlight_atlas_pos = Vector2i(2,0)
 const main_source = 0
 
-func _use_tile_data_runtime_update(layer: int, coords: Vector2i) -> bool:
+func _use_tile_data_runtime_update(layer: int, _coords: Vector2i) -> bool:
 	return layer in [0]
 	
-func _tile_data_runtime_update(layer: int, coords: Vector2i, tile_data: TileData) -> void:
+func _tile_data_runtime_update(_layer: int, _coords: Vector2i, tile_data: TileData) -> void:
 	tile_data.set_collision_polygons_count(0, 0)
 	
 # Called when the node enters the scene tree for the first time.
@@ -39,7 +39,7 @@ func _ready():
 	astar_grid.update()
 	
 func check_range(ability_data: AbilityData, pos: Vector2) -> bool:
-	var range = ability_data.ability_range
+	var ability_range = ability_data.ability_range
 	should_move = true if ability_data.ability_name == 'move' else false
 	
 	ability_path = astar_grid.get_id_path(
@@ -49,27 +49,27 @@ func check_range(ability_data: AbilityData, pos: Vector2) -> bool:
 			
 	# TODO this breaks spell damage, but is needed for movement
 	#or ability_data.ability_name != 'move'
-	if len(ability_path) > range :
+	if len(ability_path) > ability_range :
 		ability_path = []
 		return false
 	else:
 		return true
 	
-func move_entity():
+func move_entity(entity: Entity):
 	target_position = map_to_local(ability_path.front() - iso_offset) + Vector2(0, -8)
-	player.global_position = player.global_position.move_toward(target_position, 1)
+	entity.global_position = entity.global_position.move_toward(target_position, 1)
 	
-	if player.global_position == target_position:
+	if entity.global_position == target_position:
 		ability_path.pop_front()
-		player.global_position = player.global_position.move_toward(target_position, 1)
+		entity.global_position = entity.global_position.move_toward(target_position, 1)
 		
 		if not ability_path.is_empty():
 			target_position = map_to_local(ability_path.front() - iso_offset) + Vector2(0, -8)
 		else:
-			Globals.player_pos = player.global_position
+			Globals.player_pos = entity.global_position
 			return
 		
-func _process(delta):
+func _process(_delta):
 	selected_tile_map = local_to_map(get_global_mouse_position())
 	player_tile_map = local_to_map(Globals.player_pos)
 	selected_tile_loc = map_to_local(selected_tile_map)
@@ -78,4 +78,4 @@ func _process(delta):
 	if ability_path.is_empty() or not should_move:
 		return
 	else:
-		move_entity()
+		move_entity(Globals.turn_entity)

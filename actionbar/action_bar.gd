@@ -7,7 +7,6 @@ const Ability = preload("res://actionbar/spell_button.tscn")
 func set_player_ability_data(inventory_data: InventoryData) -> void:
 	populate_action_bar(inventory_data)
 	
-	# This is moved to the spell manager
 func populate_action_bar(inventory_data: InventoryData) -> void:
 	for child in h_box_container.get_children():
 		child.queue_free()

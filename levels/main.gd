@@ -1,10 +1,9 @@
 extends Node
 
-@onready var player: CharacterBody2D = $Level/Player
-@onready var inventory_interface: Control = $UI/InventoryInterface
-@onready var action_bar = $UI/ActionBar
+@onready var player: CharacterBody2D = $Level/Party/Player
+@onready var inventory_interface: Control = UiBattle.inventory_interface
+@onready var action_bar = UiBattle.action_bar
 @onready var spell_manager = $Level/SpellManager
-@onready var selected_target = $UI/SelectedTarget
 
 func _ready():
 	player.toggle_inventory.connect(toggle_inventory_interface)
@@ -22,11 +21,7 @@ func toggle_inventory_interface(external_inventory_owner = null) -> void:
 	else:
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
-	if external_inventory_owner and inventory_interface.visible:
-		inventory_interface.set_external_inventory(external_inventory_owner)
-	else: 
-		inventory_interface.clear_external_inventory()
-
-func _on_level_body_selected(body):
-	if body:
-		selected_target.text = str('Enemy HP: ', body.health)
+	#if external_inventory_owner and inventory_interface.visible:
+		#inventory_interface.set_external_inventory(external_inventory_owner)
+	#else: 
+		#inventory_interface.clear_external_inventory()

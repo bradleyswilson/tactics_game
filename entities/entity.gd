@@ -7,10 +7,14 @@ class_name Entity
 @export var action_bar_data: InventoryData
 @export var health = 100
 
+func toggle_outline(enabled: bool):
+	$Sprite2D.material.set_shader_parameter("enable_outline", enabled) 
+	
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	pass
+	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	pass

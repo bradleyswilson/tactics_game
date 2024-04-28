@@ -1,13 +1,46 @@
-[gd_scene load_steps=9 format=3 uid="uid://4g07xnpwmo8j"]
+[gd_scene load_steps=19 format=3 uid="uid://4g07xnpwmo8j"]
 
 [ext_resource type="Script" path="res://levels/level.gd" id="1_nrfdk"]
 [ext_resource type="PackedScene" uid="uid://dvgrs2m7skky1" path="res://tilemaps/tilemap.tscn" id="2_qa0yh"]
 [ext_resource type="PackedScene" uid="uid://bqf8ct6iht8er" path="res://entities/enemy.tscn" id="3_kn4a8"]
+[ext_resource type="Script" path="res://inventory/inventory_data.gd" id="4_2gten"]
+[ext_resource type="Shader" path="res://entities/player.gdshader" id="4_4nhpt"]
 [ext_resource type="PackedScene" uid="uid://b5nph7ryuc3rc" path="res://entities/player.tscn" id="4_80mmo"]
+[ext_resource type="Resource" uid="uid://ob1gmgy32i7l" path="res://abilities/ice.tres" id="5_si4nm"]
 [ext_resource type="Script" path="res://ui/highlight_interface.gd" id="5_u5pwq"]
+[ext_resource type="Script" path="res://inventory/slot_data.gd" id="6_v56ed"]
 [ext_resource type="Script" path="res://abilities/spell_manager.gd" id="7_6blyn"]
 [ext_resource type="Script" path="res://turn_controller/turn_controller.gd" id="7_8cf6q"]
+[ext_resource type="Resource" uid="uid://b5cjgks1h1g1y" path="res://abilities/move.tres" id="7_68yp7"]
 [ext_resource type="Script" path="res://turn_controller/is_active_turn.gd" id="8_jos0q"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gkwcy"]
+resource_local_to_scene = true
+shader = ExtResource("4_4nhpt")
+shader_parameter/line_color = Color(1, 1, 1, 1)
+shader_parameter/line_thickness = 1.0
+shader_parameter/enable_outline = false
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_l8yr6"]
+resource_local_to_scene = true
+shader = ExtResource("4_4nhpt")
+shader_parameter/line_color = Color(1, 1, 1, 1)
+shader_parameter/line_thickness = 1.0
+shader_parameter/enable_outline = false
+
+[sub_resource type="Resource" id="Resource_cjwgs"]
+script = ExtResource("6_v56ed")
+item_data = ExtResource("5_si4nm")
+quantity = 1
+
+[sub_resource type="Resource" id="Resource_icixa"]
+script = ExtResource("6_v56ed")
+item_data = ExtResource("7_68yp7")
+quantity = 1
+
+[sub_resource type="Resource" id="Resource_yd7ci"]
+script = ExtResource("4_2gten")
+slot_datas = Array[ExtResource("6_v56ed")]([SubResource("Resource_cjwgs"), SubResource("Resource_icixa")])
 
 [node name="Level" type="Node2D"]
 y_sort_enabled = true
@@ -23,19 +56,24 @@ collision_visibility_mode = 0
 z_index = 1
 z_as_relative = false
 y_sort_enabled = true
+texture_filter = 1
+material = SubResource("ShaderMaterial_gkwcy")
 position = Vector2(128, 152)
 scale = Vector2(0.998514, 0.998235)
 disable_mode = 1
 collision_layer = 5
 
 [node name="Player2" parent="Party" groups=["moveable_entities"] instance=ExtResource("4_80mmo")]
+modulate = Color(0.823529, 0.239216, 0.266667, 1)
 z_index = 1
 z_as_relative = false
 y_sort_enabled = true
+material = SubResource("ShaderMaterial_l8yr6")
 position = Vector2(193, 90)
 scale = Vector2(0.998514, 0.998235)
 disable_mode = 1
 collision_layer = 5
+action_bar_data = SubResource("Resource_yd7ci")
 
 [node name="Enemies" type="Node2D" parent="."]
 
@@ -49,7 +87,7 @@ position = Vector2(353, 142)
 z_index = 1
 y_sort_enabled = true
 texture_filter = 1
-position = Vector2(353, 142)
+position = Vector2(287, 108)
 
 [node name="SpellManager" type="Node2D" parent="."]
 top_level = true

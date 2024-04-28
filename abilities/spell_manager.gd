@@ -12,7 +12,7 @@ func on_ability_used(ability_datas: InventoryData, index: int) -> void:
 	grabbed_ability = ability_datas.grab_ability_data(index)
 	ability_data = grabbed_ability.item_data
 	match [ability_data.ability_type]:
-		["RangedAOE"]:
+		[_]:
 			show_range.emit(ability_data)
 	
 			#create_spell(spell_pos, grabbed_spell_data)
