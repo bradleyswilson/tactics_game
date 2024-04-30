@@ -15,14 +15,14 @@
 [ext_resource type="Resource" uid="uid://bjk6lerd00wg4" path="res://abilities/shock.tres" id="8_yyafb"]
 [ext_resource type="Resource" uid="uid://5hor0m2wnnfc" path="res://abilities/enemy_spell.tres" id="10_v7rgk"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_mwocq"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_own04"]
 resource_local_to_scene = true
 shader = ExtResource("4_4nhpt")
 shader_parameter/line_color = Color(1, 1, 1, 1)
 shader_parameter/line_thickness = 1.0
 shader_parameter/enable_outline = false
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_r8yvj"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7ahkk"]
 resource_local_to_scene = true
 shader = ExtResource("4_4nhpt")
 shader_parameter/line_color = Color(1, 1, 1, 1)
@@ -53,7 +53,7 @@ script = ExtResource("6_v56ed")
 item_data = ExtResource("10_v7rgk")
 quantity = 1
 
-[sub_resource type="Resource" id="Resource_i3dyb"]
+[sub_resource type="Resource" id="Resource_bf6s6"]
 resource_local_to_scene = true
 script = ExtResource("4_2gten")
 slot_datas = Array[ExtResource("6_v56ed")]([SubResource("Resource_785sa"), SubResource("Resource_mfl7x")])
@@ -63,7 +63,7 @@ script = ExtResource("6_v56ed")
 item_data = ExtResource("10_v7rgk")
 quantity = 1
 
-[sub_resource type="Resource" id="Resource_f11d0"]
+[sub_resource type="Resource" id="Resource_bqoqk"]
 resource_local_to_scene = true
 script = ExtResource("4_2gten")
 slot_datas = Array[ExtResource("6_v56ed")]([SubResource("Resource_785sa"), SubResource("Resource_koq2u")])
@@ -84,7 +84,7 @@ z_index = 1
 z_as_relative = false
 y_sort_enabled = true
 texture_filter = 1
-material = SubResource("ShaderMaterial_mwocq")
+material = SubResource("ShaderMaterial_own04")
 position = Vector2(103, 125)
 scale = Vector2(0.998514, 0.998235)
 disable_mode = 1
@@ -95,7 +95,7 @@ modulate = Color(0.823529, 0.239216, 0.266667, 1)
 z_index = 1
 z_as_relative = false
 y_sort_enabled = true
-material = SubResource("ShaderMaterial_r8yvj")
+material = SubResource("ShaderMaterial_7ahkk")
 position = Vector2(151, 149)
 scale = Vector2(0.998514, 0.998235)
 disable_mode = 1
@@ -111,14 +111,14 @@ z_index = 1
 y_sort_enabled = true
 texture_filter = 1
 position = Vector2(344, 136)
-action_bar_data = SubResource("Resource_i3dyb")
+action_bar_data = SubResource("Resource_bf6s6")
 
 [node name="Enemy2" parent="Enemies" instance=ExtResource("3_kn4a8")]
 z_index = 1
 y_sort_enabled = true
 texture_filter = 1
 position = Vector2(249, 91)
-action_bar_data = SubResource("Resource_f11d0")
+action_bar_data = SubResource("Resource_bqoqk")
 
 [node name="SpellManager" type="Node2D" parent="."]
 top_level = true

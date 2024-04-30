@@ -39,7 +39,7 @@ func _ready():
 
 @onready var Square = preload("res://ui/highlight_square.tscn")
 
-
+#TODO clean up movement
 func get_enemy_moves(enemy_pos: Vector2, ability_data: AbilityData):
 	var offset_x = Vector2(-32,-16)
 	var offset_y = Vector2(32, -16)
@@ -56,28 +56,29 @@ func get_enemy_moves(enemy_pos: Vector2, ability_data: AbilityData):
 				move_options.append(enemy_pos + Vector2(pos_x, pos_y))
 
 	return(move_options)
-	#return()
-	#Globals.return_enemy_moves.emit(move_options)
-	##check_range(move_data, 
-	#			enemy_pos,
-	#			move_options.pick_random())
 
 				
 func check_range(ability_data: AbilityData, pos: Vector2, target_pos: Vector2) -> bool:
+	# This should be clean, if the target is off the map just immediately break
+	if get_cell_tile_data(0, local_to_map(target_pos)) == null:
+		return false
+	
 	var ability_range = ability_data.ability_range
 	should_move = true if ability_data.ability_name == 'move' else false
+	
 	ability_path = astar_grid.get_id_path(
 			local_to_map(pos) + iso_offset,
 			local_to_map(target_pos) + iso_offset
-			).slice(1)
-			
-	# TODO this breaks spell damage, but is needed for movement
-	#or ability_data.ability_name != 'move'
+			).slice(1)	
+
 	if len(ability_path) > ability_range :
 		ability_path = []
 		return false
 	else:
 		return true
+
+
+
 
 func move_entity(entity: Entity):
 	target_position = map_to_local(ability_path.front() - iso_offset)
@@ -94,15 +95,6 @@ func move_entity(entity: Entity):
 			Globals.turn_entity_pos = entity.global_position
 			return
 
-#func tile_entity_check(tile_loc: Vector2):
-	#var loc = map_to_local(tile_loc)
-	#
-	#for entity in Globals.turn_queue:
-		#if entity is PlayableEntity:
-			#
-#@	var loc = map_to_local
-	
-	
 		
 
 func _process(_delta):
