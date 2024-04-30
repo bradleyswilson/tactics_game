@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bim4h5fspb4ik"]
+[gd_scene load_steps=10 format=3 uid="uid://bim4h5fspb4ik"]
 
 [ext_resource type="Script" path="res://ui/ui_battle.gd" id="1_c28ef"]
 [ext_resource type="Script" path="res://inventory/inventory_interface.gd" id="1_wvbw6"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://ch5bney2vrcsy" path="res://actionbar/action_bar.tscn" id="5_42oac"]
 [ext_resource type="PackedScene" uid="uid://d0his2dwy6u66" path="res://ui/entity_info.tscn" id="7_h8adm"]
 [ext_resource type="PackedScene" uid="uid://c1si0nxvgv6p4" path="res://ui/turn_order_display.tscn" id="8_avrua"]
+[ext_resource type="Texture2D" uid="uid://kvfbl0gn5r85" path="res://assets/Style_1.png" id="9_65tfc"]
 
 [node name="BattleUI" type="CanvasLayer"]
 script = ExtResource("1_c28ef")
@@ -51,6 +52,8 @@ grow_horizontal = 1
 grow_vertical = 1
 
 [node name="ActionBar" parent="." instance=ExtResource("5_42oac")]
+offset_left = 2.08165e-12
+offset_top = -24.0
 
 [node name="PartyStats" type="VBoxContainer" parent="."]
 offset_right = 40.0
@@ -76,3 +79,20 @@ offset_bottom = 60.0
 grow_horizontal = 0
 
 [node name="TurnOrderDisplay" parent="." instance=ExtResource("8_avrua")]
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -60.0
+offset_top = -41.0
+offset_right = 440.0
+offset_bottom = 9.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.25, 0.25)
+size_flags_horizontal = 4
+value = 100.0
+texture_progress = ExtResource("9_65tfc")

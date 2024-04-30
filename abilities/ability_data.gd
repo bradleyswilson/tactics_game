@@ -7,6 +7,12 @@ class_name AbilityData
 @export var ability_range: int
 @export var cooldown : float
 
+func _try_damage(ability_data: AbilityData, target: Entity):
+	var start_health = target.health
+	var end_health = target.health
+	if target:
+		end_health -= ability_data.ability_damage
+	return(start_health - end_health)
 
 func _damage(ability_data: AbilityData, target: Entity):
 	if target:

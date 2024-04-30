@@ -12,25 +12,23 @@ func _ready():
 	#set_process(false)
 	
 func _enter_state() -> void:
-	## Damage resolve stuff here?
-	## Status effect resolve here?
-	#if turn_entity == PlayableEntity:
-	print('playable turn')
+	Globals.turn_entity = turn_entity
+	Globals.turn_entity_pos = turn_entity.global_position
+	
 	turn_entity.toggle_outline(true)
 	if turn_entity is PlayableEntity:
 		UiBattle.action_bar.set_player_ability_data(turn_entity.action_bar_data)
 		turn_entity.action_bar_data.ability_used.connect(on_ability_used)
-	Globals.turn_entity = turn_entity
-	Globals.player_pos = turn_entity.global_position
+	
+	elif turn_entity is Enemy:
+		turn_entity.get_available_actions()
+		
 
-	print('entered_state: ', turn_entity)
 
 func _exit_state():
 	turn_entity.toggle_outline(false)
-	
 	if turn_entity.action_bar_data != null:
 		turn_entity.action_bar_data.ability_used.disconnect(on_ability_used)
-	print('exited_state: ', turn_entity)
 
 func _input(event):
 	if event.is_action_pressed("interact"):

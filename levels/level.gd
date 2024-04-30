@@ -1,7 +1,6 @@
 extends Node2D
 class_name LevelParent
 
-@onready var player: CharacterBody2D = $Party/Player
 @onready var party = $Party.get_children()
 @onready var enemies = $Enemies.get_children()
 @onready var enemy = $Enemies/Enemy
@@ -19,6 +18,7 @@ var casting_ability: AbilityData
 signal ability_confirmed(ability_data: AbilityData)
 
 func _ready():
+	start_battle()
 	active_entities += party
 	active_entities += enemies
 	#TODO sort by initiative?
@@ -26,6 +26,12 @@ func _ready():
 	$TurnManager/ActiveTurn.ability_used.connect(show_range)
 	$HighlightInterface/Cursor.get_children()[0].highlight_entered.connect(on_body_entered)
 	$HighlightInterface/Cursor.get_children()[0].highlight_exited.connect(on_body_exited)
+	
+func start_battle():
+	party[0].global_position = tilemap.map_to_local(Vector2i(9,4))
+	party[1].global_position = tilemap.map_to_local(Vector2i(12,4))
+	enemies[0].global_position = tilemap.map_to_local(Vector2i(11,-3)) 
+	enemies[1].global_position = tilemap.map_to_local(Vector2i(15,-3))
 	
 func _update():
 	Globals.turn_queue.assign(active_entities)
@@ -55,7 +61,7 @@ func on_body_exited(body):
 func _physics_process(_delta):
 	if tilemap.get_cell_tile_data(0,tilemap.selected_tile_map):
 		$HighlightInterface/Cursor.show()		
-		highlight_interface.show_cursor(tilemap.selected_tile_loc + Vector2i(0, 8)) 
+		highlight_interface.show_cursor(tilemap.selected_tile_loc) 
 	else:
 		$HighlightInterface/Cursor.hide()
 		
@@ -67,7 +73,7 @@ func show_range(ability_data: AbilityData) -> void:
 	
 	for i in range_highlight.get_children():
 		if tilemap.get_cell_tile_data(0,  
-		tilemap.local_to_map(i.global_position - Vector2(0, 8))) == null:
+		tilemap.local_to_map(i.global_position)) == null:
 			i.queue_free()
 		
 	if range_highlight.visible:
@@ -81,10 +87,10 @@ func _on_ability_confirm() -> void:
 	if casting_ability != null:
 		match [casting_ability.ability_type]:
 			["player_movement"]:
-				if tilemap.check_range(player.move_data, Globals.player_pos):
+				if tilemap.check_range(casting_ability, Globals.turn_entity_pos, get_global_mouse_position()):
 					range_highlight.visible = not range_highlight.visible
 			["RangedAOE"]:
-				if tilemap.check_range(casting_ability, Globals.player_pos):
+				if tilemap.check_range(casting_ability, Globals.turn_entity_pos, get_global_mouse_position()):
 					ability_execute(casting_ability, tilemap.selected_tile_loc)
 					range_highlight.visible = not range_highlight.visible
 					casting_ability = null
@@ -102,7 +108,7 @@ func ability_execute(casted_ability: AbilityData, cast_location: Vector2):
 		["RangedAOE"]:
 			var spell = spell_test.instantiate()
 			spell_manager.add_child(spell)
-			spell.global_position = cast_location - Vector2(0, -8)
+			spell.global_position = cast_location
 			spell.modulate = Color(0,1,0)
 			casted_ability._damage(casted_ability, selected_body)
 

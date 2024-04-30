@@ -28,7 +28,7 @@ func show_range(movement_range: int, source_loc: Vector2):
 				# Position each square using isometric offset calculations
 				var pos_x = dx * offset_x.x * 0.5  + dy * offset_y.x * 0.5
 				var pos_y = dx * offset_x.y * 0.5  + dy * offset_y.y * 0.5
-				square.global_position = source_loc - Vector2(0, -8) +  Vector2(pos_x, pos_y)
+				square.global_position = source_loc +  Vector2(pos_x, pos_y)
 				
 	if not abilities.visible:
 		for n in abilities.get_children():

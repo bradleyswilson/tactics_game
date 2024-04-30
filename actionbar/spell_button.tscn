@@ -11,7 +11,7 @@ events = [SubResource("InputEventKey_v30l5")]
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_xow8g"]
 
 [node name="SpellButton" type="TextureButton"]
-custom_minimum_size = Vector2(32, 2.08165e-12)
+custom_minimum_size = Vector2(24, 2.08165e-12)
 layout_direction = 2
 offset_right = 85.0
 offset_bottom = 85.0

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="AbilityData" load_steps=2 format=3 uid="uid://5hor0m2wnnfc"]
+
+[ext_resource type="Script" path="res://abilities/ability_data.gd" id="1_ifk3w"]
+
+[resource]
+script = ExtResource("1_ifk3w")
+ability_name = "FireBreath"
+ability_type = "Cone"
+ability_damage = 25.0
+ability_range = 1
+cooldown = 1.0
+name = "FireBreath"
+description = "A test fire spell"
+stackable = false

@@ -14,6 +14,8 @@ func _ready():
 func on_state_change():
 	turn._exit_state()
 	turn_queue.push_back(turn_queue.pop_front())
+	print('start turn for: ', Globals.turn_queue[0])
+	
 	start_turn(turn_queue[0])
 	UiBattle.turn_order_display.set_turn_data(Globals.turn_queue)
 

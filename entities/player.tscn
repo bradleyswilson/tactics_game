@@ -38,6 +38,7 @@ action_bar_data = ExtResource("4_76q4i")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_eyihn")
+position = Vector2(2.08165e-12, -8)
 texture = ExtResource("5_0oki1")
 flip_h = true
 

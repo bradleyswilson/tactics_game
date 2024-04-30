@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="InventoryData" load_steps=5 format=3 uid="uid://v5pww1jxq7ne"]
+
+[ext_resource type="Script" path="res://inventory/inventory_data.gd" id="1_bsl0v"]
+[ext_resource type="Resource" uid="uid://b5cjgks1h1g1y" path="res://abilities/move.tres" id="2_nuk2f"]
+[ext_resource type="Script" path="res://inventory/slot_data.gd" id="3_ptqmg"]
+
+[sub_resource type="Resource" id="Resource_785sa"]
+script = ExtResource("3_ptqmg")
+item_data = ExtResource("2_nuk2f")
+quantity = 1
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource("1_bsl0v")
+slot_datas = Array[ExtResource("3_ptqmg")]([SubResource("Resource_785sa"), SubResource("Resource_785sa")])
