@@ -1,0 +1,61 @@
+[gd_scene load_steps=10 format=3 uid="uid://b5nph7ryuc3rc"]
+
+[ext_resource type="Script" path="res://entities/player.gd" id="1_i8kge"]
+[ext_resource type="Shader" path="res://entities/player.gdshader" id="1_nxmaf"]
+[ext_resource type="Resource" uid="uid://b5cjgks1h1g1y" path="res://abilities/move.tres" id="2_un1hi"]
+[ext_resource type="Resource" uid="uid://basmht2gja474" path="res://inventory/test_inv.tres" id="3_0xd8a"]
+[ext_resource type="Resource" uid="uid://de5lmqmeax2t7" path="res://actionbar/test_actionbar.tres" id="4_76q4i"]
+[ext_resource type="Texture2D" uid="uid://biuu22dgoufbv" path="res://assets/iso_diver_front.aseprite" id="5_0oki1"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_eyihn"]
+resource_local_to_scene = true
+shader = ExtResource("1_nxmaf")
+shader_parameter/line_color = Color(1, 1, 1, 1)
+shader_parameter/line_thickness = 1.0
+shader_parameter/enable_outline = false
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_l603a"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_0oki1")
+}],
+"loop": true,
+"name": &"front",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xkpcy"]
+radius = 5.0
+height = 10.0
+
+[node name="Player" type="CharacterBody2D"]
+motion_mode = 1
+script = ExtResource("1_i8kge")
+move_data = ExtResource("2_un1hi")
+inventory_data = ExtResource("3_0xd8a")
+action_bar_data = ExtResource("4_76q4i")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_eyihn")
+position = Vector2(2.08165e-12, -8)
+texture = ExtResource("5_0oki1")
+flip_h = true
+
+[node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
+visible = false
+texture_filter = 1
+texture_repeat = 1
+sprite_frames = SubResource("SpriteFrames_l603a")
+animation = &"front"
+flip_h = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, 7)
+shape = SubResource("CapsuleShape2D_xkpcy")
+one_way_collision_margin = 0.0
+
+[node name="InteractRay" type="RayCast2D" parent="."]
+target_position = Vector2(17, 0)
+collision_mask = 4
+collide_with_areas = true
