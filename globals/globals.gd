@@ -3,12 +3,25 @@ extends Node
 signal stat_change
 signal get_enemy_moves(Vector2)
 signal return_enemy_moves(Array)
+signal start_turn()
+signal end_turn()
 
 var turn_entity: Entity
 var turn_queue: Array[Entity]
-var turn_entity_pos: Vector2
+var entities_pos: Array[Vector2]
 
+func _ready():
+	start_turn.connect(on_start_turn)
+	#end_turn.connect(on_end_turn)
+	
+func on_start_turn():
+	for entity in turn_queue:
+		entities_pos.append(entity.global_position)
 
+func on_end_turn():
+	entities_pos = []
+
+	
 var hover_entity: Entity
 #UiBattle.member_hp.value = turn_entity.health
 

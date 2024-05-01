@@ -11,7 +11,10 @@ signal toggle_inventory()
 func _ready():
 	health = 100
 	#move_data.ability_range = 5
-	#Globals.player_pos = global_position # set original play pos
+	StatusEffects.on_entity_death.connect(_on_entity_death)
+	#
+func _on_entity_death(entity: Entity):
+	super._on_entity_death(entity)
 	
 func _unhandled_input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("toggle_inventory"):

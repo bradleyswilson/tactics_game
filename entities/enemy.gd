@@ -1,20 +1,26 @@
 extends Entity
 class_name Enemy 
 
+@export var shape_tiles: Array
 @onready var tilemap = get_tree().get_nodes_in_group("tilemaps")[0]
 @onready var move_candidates: Array[Vector2]
 
-
+func _ready():
+	shape_tiles = [Vector2i(0,0), Vector2i(-1,0), Vector2i(0, -1), Vector2i(-1, -1)]
+	StatusEffects.on_entity_death.connect(_on_entity_death)
+	#
+func _on_entity_death(entity: Entity):
+	super._on_entity_death(entity)
+	
 func get_available_actions():
 	var move_data = Globals.turn_entity.action_bar_data.slot_datas[0].item_data
 	var ability_data = Globals.turn_entity.action_bar_data.slot_datas[-1]
 	
-	var option_scores: Array
+	#move_candidates = tilemap.get_enemy_moves(Globals.turn_entity_pos, shape_tiles, move_data)
 	# Get all possible movement locations
-	move_candidates = tilemap.get_enemy_moves(Globals.turn_entity_pos, move_data)
-	var test = move_candidates
+	#move_candidates = tilemap.get_enemy_moves(Globals.turn_entity_pos, shape_tiles, move_data)
 	
-	var player_positions: Array
+	var player_positions: Array = []
 	for entity in Globals.turn_queue:
 		if entity is PlayableEntity:
 			player_positions.append(entity.global_position)
@@ -34,7 +40,7 @@ func get_available_actions():
 				pass
 
 		elif ability_data is SlotData:
-			var ability_candidates = tilemap.get_enemy_moves(move, ability_data.item_data)
+			var ability_candidates = tilemap.get_enemy_moves(move, [Vector2i(0,0)], ability_data.item_data)
 			for cast_loc in ability_candidates:
 				dmg_details = check_option(cast_loc, ability_data.item_data)
 				if dmg_details[0] > max_damage:

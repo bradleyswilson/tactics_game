@@ -13,7 +13,8 @@ func _ready():
 	
 func _enter_state() -> void:
 	Globals.turn_entity = turn_entity
-	Globals.turn_entity_pos = turn_entity.global_position
+	#Globals.turn_entity_pos = turn_entity.global_position
+	Globals.start_turn.emit()
 	
 	turn_entity.toggle_outline(true)
 	if turn_entity is PlayableEntity:
@@ -26,6 +27,7 @@ func _enter_state() -> void:
 
 
 func _exit_state():
+	Globals.end_turn.emit()
 	turn_entity.toggle_outline(false)
 	if turn_entity.action_bar_data != null:
 		turn_entity.action_bar_data.ability_used.disconnect(on_ability_used)

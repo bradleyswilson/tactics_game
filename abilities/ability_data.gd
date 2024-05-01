@@ -18,5 +18,9 @@ func _damage(ability_data: AbilityData, target: Entity):
 	if target:
 		target.health -= ability_data.ability_damage
 		Globals.stat_change.emit()
-		#print(target.health)
+	
+		if target.health <= target.MIN_HP:
+			print('emitted', target)
+			StatusEffects.on_entity_death.emit(target)
+	#print(target.health)
 

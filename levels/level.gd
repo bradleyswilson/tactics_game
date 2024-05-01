@@ -1,9 +1,12 @@
 extends Node2D
 class_name LevelParent
 
-@onready var party = $Party.get_children()
-@onready var enemies = $Enemies.get_children()
-@onready var enemy = $Enemies/Enemy
+@onready var party_member = preload("res://entities/player.tscn")
+@onready var enemy = preload("res://entities/enemy.tscn")
+
+@onready var party = $Party
+@onready var enemies = $Enemies
+
 @onready var tilemap = $Tilemap
 @onready var highlight_interface = $HighlightInterface
 @onready var range_highlight = $HighlightInterface/Abilities
@@ -19,8 +22,8 @@ signal ability_confirmed(ability_data: AbilityData)
 
 func _ready():
 	start_battle()
-	active_entities += party
-	active_entities += enemies
+	active_entities += $Party.get_children()
+	active_entities += $Enemies.get_children()
 	#TODO sort by initiative?
 	
 	$TurnManager/ActiveTurn.ability_used.connect(show_range)
@@ -28,10 +31,19 @@ func _ready():
 	$HighlightInterface/Cursor.get_children()[0].highlight_exited.connect(on_body_exited)
 	
 func start_battle():
-	party[0].global_position = tilemap.map_to_local(Vector2i(9,4))
-	party[1].global_position = tilemap.map_to_local(Vector2i(12,4))
-	enemies[0].global_position = tilemap.map_to_local(Vector2i(11,-3)) 
-	enemies[1].global_position = tilemap.map_to_local(Vector2i(15,-3))
+	var char1 = party_member.instantiate()
+	var char2 = party_member.instantiate()
+	party.add_child(char1)
+	party.add_child(char2)
+	party.get_children()[0].global_position = tilemap.map_to_local(Vector2i(9,4))
+	party.get_children()[1].global_position = tilemap.map_to_local(Vector2i(12,4))
+	
+	var enemy1 = enemy.instantiate()
+	var enemy2 = enemy.instantiate()
+	enemies.add_child(enemy1)
+	enemies.add_child(enemy2)
+	enemies.get_children()[0].global_position = tilemap.map_to_local(Vector2i(11,-3)) 
+	enemies.get_children()[1].global_position = tilemap.map_to_local(Vector2i(15,-3))
 	
 func _update():
 	Globals.turn_queue.assign(active_entities)
@@ -87,10 +99,13 @@ func _on_ability_confirm() -> void:
 	if casting_ability != null:
 		match [casting_ability.ability_type]:
 			["player_movement"]:
-				if tilemap.check_range(casting_ability, Globals.turn_entity_pos, get_global_mouse_position()):
+				if tilemap.is_target_valid(casting_ability, Globals.turn_entity.global_position, get_global_mouse_position()):
 					range_highlight.visible = not range_highlight.visible
+				else:
+					print('invalid movement_target')
 			["RangedAOE"]:
-				if tilemap.check_range(casting_ability, Globals.turn_entity_pos, get_global_mouse_position()):
+				print(casting_ability)
+				if tilemap.is_target_valid(casting_ability, Globals.turn_entity.global_position, get_global_mouse_position()):
 					ability_execute(casting_ability, tilemap.selected_tile_loc)
 					range_highlight.visible = not range_highlight.visible
 					casting_ability = null
