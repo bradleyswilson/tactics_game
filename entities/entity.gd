@@ -12,8 +12,9 @@ const MIN_HP: int = 0
 
 func toggle_outline(enabled: bool):
 	$Sprite2D.material.set_shader_parameter("enable_outline", enabled) 
-
+#
 func _on_entity_death(entity: Entity):
+	print(entity)
 	var ind = Globals.turn_queue.find(entity)
 	Globals.turn_queue.remove_at(ind)
 	UiBattle.turn_order_display.update_turn_display()

@@ -14,7 +14,8 @@ func _ready():
 	StatusEffects.on_entity_death.connect(_on_entity_death)
 	#
 func _on_entity_death(entity: Entity):
-	super._on_entity_death(entity)
+	if entity == self:
+		super._on_entity_death(entity)
 	
 func _unhandled_input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("toggle_inventory"):

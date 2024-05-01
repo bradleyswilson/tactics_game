@@ -10,7 +10,8 @@ func _ready():
 	StatusEffects.on_entity_death.connect(_on_entity_death)
 	#
 func _on_entity_death(entity: Entity):
-	super._on_entity_death(entity)
+	if entity == self:
+		super._on_entity_death(entity)
 	
 func get_available_actions():
 	var move_data = Globals.turn_entity.action_bar_data.slot_datas[0].item_data
