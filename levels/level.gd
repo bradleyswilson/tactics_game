@@ -21,11 +21,12 @@ var casting_ability: AbilityData
 signal ability_confirmed(ability_data: AbilityData)
 
 func _ready():
+	print(Globals.hover_entity)
 	start_battle()
 	active_entities += $Party.get_children()
 	active_entities += $Enemies.get_children()
 	#TODO sort by initiative?
-	
+	_update()
 	$TurnManager/ActiveTurn.ability_used.connect(show_range)
 	$HighlightInterface/Cursor.get_children()[0].highlight_entered.connect(on_body_entered)
 	$HighlightInterface/Cursor.get_children()[0].highlight_exited.connect(on_body_exited)
@@ -49,10 +50,12 @@ func _update():
 	Globals.turn_queue.assign(active_entities)
 	turn_manager.start_turn(active_entities[0])
 	UiBattle.battle_start()
+	print(Globals.hover_entity)
 	
 func _input(event):
 	if event.is_action_pressed('start_battle'):
 		_update()
+		UiBattle.show()
 	if event.is_action_released("confirm_click"):
 		selected_body = Globals.hover_entity
 		_on_ability_confirm()
@@ -81,7 +84,7 @@ func show_range(ability_data: AbilityData) -> void:
 	# turns on range indicators and sets ability data
 	var ability_range = ability_data.ability_range
 	range_highlight.visible = not range_highlight.visible
-	highlight_interface.show_range(ability_range, tilemap.player_tile_loc)
+	highlight_interface.show_range(ability_range, Globals.entities_pos[0])
 	
 	for i in range_highlight.get_children():
 		if tilemap.get_cell_tile_data(0,  

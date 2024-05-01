@@ -23,13 +23,11 @@ func _enter_state() -> void:
 	
 	elif turn_entity is Enemy:
 		turn_entity.get_available_actions()
-		
-
 
 func _exit_state():
 	Globals.end_turn.emit()
 	turn_entity.toggle_outline(false)
-	if turn_entity.action_bar_data != null:
+	if turn_entity is PlayableEntity:
 		turn_entity.action_bar_data.ability_used.disconnect(on_ability_used)
 
 func _input(event):

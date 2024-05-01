@@ -23,7 +23,7 @@ func show_range(movement_range: int, source_loc: Vector2):
 	for n in abilities.get_children():
 		n.queue_free()
 	
-	var indicator_positions = get_range_squares(movement_range, source_loc)
+	var indicator_positions = get_range_squares(movement_range, source_loc, true)
 
 	for ind in indicator_positions:
 		var square = Square.instantiate()
@@ -36,7 +36,7 @@ func show_range(movement_range: int, source_loc: Vector2):
 		for n in abilities.get_children():
 			n.queue_free()
 			
-func get_range_squares(movement_range: int, source_loc: Vector2):
+func get_range_squares(movement_range: int, source_loc: Vector2, collisions: bool):
 	var move_options: Array = []
 	for dx in range(-movement_range, movement_range + 1):
 		for dy in range(-movement_range, movement_range + 1):
@@ -45,11 +45,12 @@ func get_range_squares(movement_range: int, source_loc: Vector2):
 				var pos_y = dx * offset_x.y * 0.5  + dy * offset_y.y * 0.5
 				var target_position = source_loc +  Vector2(pos_x, pos_y)
 				move_options.append(target_position)
-	var new_target_positions = check_path(source_loc, move_options, movement_range)
+	var new_target_positions = check_path(source_loc, move_options, \
+										  movement_range, collisions)
 	return(new_target_positions)
 
-func check_path(source_pos: Vector2, target_positions: Array, movement_range: int):
-
+func check_path(source_pos: Vector2, target_positions: Array, 
+				movement_range: int, collisions: bool):
 	var new_target_positions: Array = []
 	for target_pos in target_positions:
 		if tilemap.get_cell_tile_data(0, tilemap.local_to_map(target_pos)) != null:
@@ -57,8 +58,11 @@ func check_path(source_pos: Vector2, target_positions: Array, movement_range: in
 					tilemap.local_to_map(source_pos) + tilemap.iso_offset,
 					tilemap.local_to_map(target_pos) + tilemap.iso_offset
 					).slice(1)
-			if len(path) <= movement_range and not Globals.entities_pos.has(target_pos):
-				new_target_positions.append(target_pos)
-		
+			if collisions:
+				if len(path) <= movement_range and not Globals.entities_pos.has(target_pos):
+					new_target_positions.append(target_pos)
+			else:
+				if len(path) <= movement_range:
+					new_target_positions.append(target_pos)
 	return(new_target_positions)
 

@@ -21,10 +21,10 @@ func _unhandled_input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("toggle_inventory"):
 		toggle_inventory.emit()
 		
-	if Input.is_action_just_pressed("interact"):
-		interact()
+	#if Input.is_action_just_pressed("interact"):
+		#interact()
 
-func interact() -> void:
-	if interact_ray.is_colliding():
-		interact_ray.get_collider().player_interact()
+#func interact() -> void:
+	#if interact_ray.is_colliding():
+		#interact_ray.get_collider().player_interact()
 	

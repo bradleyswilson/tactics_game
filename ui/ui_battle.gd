@@ -9,6 +9,7 @@ const ENTITY_INFO = preload("res://ui/entity_info.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	hide()
 	Globals.stat_change.connect(update_entity_info)
 
 func battle_start():

@@ -14,12 +14,15 @@ func toggle_outline(enabled: bool):
 	$Sprite2D.material.set_shader_parameter("enable_outline", enabled) 
 #
 func _on_entity_death(entity: Entity):
-	print(entity)
 	var ind = Globals.turn_queue.find(entity)
 	Globals.turn_queue.remove_at(ind)
 	UiBattle.turn_order_display.update_turn_display()
 	entity.queue_free()
-	print('dead!')
+	
+	var live_party = Globals.turn_queue.any(func(entity): return entity is PlayableEntity)
+	if not live_party:
+		Globals.game_over.emit()
+
 	
 	#self.queue_free()
 	
