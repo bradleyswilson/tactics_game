@@ -113,12 +113,12 @@ func is_target_valid(ability_data: AbilityData, pos: Vector2, target_pos: Vector
 	else:
 		return true
 
-func move_entity(entity: Entity):
+func move_entity(entity: Entity, delta):
 	target_position = map_to_local(ability_path.front() - iso_offset)
-	entity.global_position = entity.global_position.move_toward(target_position, 1)
+	entity.global_position = entity.global_position.move_toward(target_position, entity.speed*delta)
 	if entity.global_position == target_position:
 		ability_path.pop_front()
-		entity.global_position = entity.global_position.move_toward(target_position, 1)
+		entity.global_position = entity.global_position.move_toward(target_position, entity.speed*delta)
 		
 		if not ability_path.is_empty():
 			target_position = map_to_local(ability_path.front() - iso_offset)
@@ -126,7 +126,7 @@ func move_entity(entity: Entity):
 			Globals.entities_pos[0] = entity.global_position
 			return
 
-func _process(_delta):
+func _process(delta):
 	if Globals.entities_pos:
 		selected_tile_map = local_to_map(get_global_mouse_position())
 		player_tile_map = local_to_map(Globals.entities_pos[0])
@@ -136,6 +136,5 @@ func _process(_delta):
 	if ability_path.is_empty() or not should_move:
 		return
 	else:
-		move_entity(Globals.turn_entity)
-		
+		move_entity(Globals.turn_entity, delta)
 

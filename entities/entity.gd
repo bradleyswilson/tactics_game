@@ -17,11 +17,18 @@ func _on_entity_death(entity: Entity):
 	var ind = Globals.turn_queue.find(entity)
 	Globals.turn_queue.remove_at(ind)
 	UiBattle.turn_order_display.update_turn_display()
+	Globals.hover_entity = null
+	UiBattle.entity_info_container.hide()
 	entity.queue_free()
 	
 	var live_party = Globals.turn_queue.any(func(entity): return entity is PlayableEntity)
+	var live_enemies = Globals.turn_queue.any(func(entity): return entity is Enemy)
 	if not live_party:
-		Globals.game_over.emit()
+		Globals.level_over.emit('lose')
+	
+	if not live_enemies:
+		print('win')
+		Globals.level_over.emit('win')
 
 	
 	#self.queue_free()

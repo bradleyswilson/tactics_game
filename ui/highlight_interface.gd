@@ -18,12 +18,12 @@ func show_cursor(source_loc: Vector2):
 	cursor_square.modulate = Color(0,0,1)
 	cursor_square.top_level = true
 
-func show_range(movement_range: int, source_loc: Vector2):
+func show_range(ability_range: int, source_loc: Vector2, collisions: bool):
 	# Clear existing children from the highlight interface, if needed
 	for n in abilities.get_children():
 		n.queue_free()
 	
-	var indicator_positions = get_range_squares(movement_range, source_loc, true)
+	var indicator_positions = get_range_squares(ability_range, source_loc, collisions)
 
 	for ind in indicator_positions:
 		var square = Square.instantiate()
@@ -62,7 +62,6 @@ func check_path(source_pos: Vector2, target_positions: Array,
 				if len(path) <= movement_range and not Globals.entities_pos.has(target_pos):
 					new_target_positions.append(target_pos)
 			else:
-				if len(path) <= movement_range:
-					new_target_positions.append(target_pos)
+				new_target_positions.append(target_pos)
 	return(new_target_positions)
 

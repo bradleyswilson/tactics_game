@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" path="res://entities/player.gd" id="1_i8kge"]
 [ext_resource type="Shader" path="res://entities/player.gdshader" id="1_nxmaf"]
-[ext_resource type="Resource" uid="uid://basmht2gja474" path="res://inventory/test_inv.tres" id="3_0xd8a"]
-[ext_resource type="Resource" uid="uid://de5lmqmeax2t7" path="res://actionbar/test_actionbar.tres" id="4_76q4i"]
+[ext_resource type="Resource" uid="uid://basmht2gja474" path="res://inventory/test_inv.tres" id="2_kigkk"]
+[ext_resource type="Resource" uid="uid://de5lmqmeax2t7" path="res://actionbar/test_actionbar.tres" id="2_phm58"]
 [ext_resource type="Texture2D" uid="uid://biuu22dgoufbv" path="res://assets/iso_diver_front.aseprite" id="5_0oki1"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_eyihn"]
@@ -33,8 +33,8 @@ z_index = 1
 y_sort_enabled = true
 motion_mode = 1
 script = ExtResource("1_i8kge")
-inventory_data = ExtResource("3_0xd8a")
-action_bar_data = ExtResource("4_76q4i")
+inventory_data = ExtResource("2_kigkk")
+action_bar_data = ExtResource("2_phm58")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_eyihn")
