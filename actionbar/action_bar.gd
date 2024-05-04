@@ -29,13 +29,3 @@ func update_action_bar(inventory_data: InventoryData, cooldown_array: Array) -> 
 			h_box_container.get_child(i).update_cooldown(cooldown_array, i)
 		i+=1
 	
-	#match [grabbed_slot_data, button]:
-		#[null, MOUSE_BUTTON_LEFT]:
-			#grabbed_slot_data = inventory_data.grab_slot_data(index)
-		#[_, MOUSE_BUTTON_LEFT]:
-			#grabbed_slot_data = inventory_data.drop_slot_data(grabbed_slot_data, index)
-		#[null, MOUSE_BUTTON_RIGHT]:
-			#pass
-		#[_, MOUSE_BUTTON_RIGHT]:
-			#grabbed_slot_data = inventory_data.drop_single_slot_data(grabbed_slot_data, index)
-	#update_grabbed_slot()

@@ -5,7 +5,6 @@ extends Node
 @onready var button = $StartScreen/Control/Button
 @onready var level = $Level
 
-
 @onready var level_over = $StartScreen/LevelOver
 @onready var game_over_label = $StartScreen/LevelOver/GameOverLabel
 @onready var win_label = $StartScreen/LevelOver/WinLabel

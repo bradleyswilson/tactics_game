@@ -5,7 +5,7 @@ extends Turn
 var grabbed_ability: SlotData
 var ability_data: ItemData
 
-signal ability_used(ability_data: AbilityData, is_valid_cast: bool, index)
+signal ability_used(ability_data: AbilityData, is_valid_cast: bool)
 
 func _ready():
 	pass

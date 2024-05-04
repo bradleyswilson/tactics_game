@@ -4,6 +4,9 @@ extends CanvasLayer
 @onready var action_bar = $ActionBar
 @onready var entity_info_container = $EntityInfoContainer
 @onready var turn_order_display = $TurnOrderDisplay
+@onready var tilemap = get_tree().get_nodes_in_group("tilemaps")[0]
+@onready var pathfinder = get_tree().get_nodes_in_group("pathfinder")[0]
+var temp_body
 
 const ENTITY_INFO = preload("res://ui/entity_info.tscn")
 
@@ -13,9 +16,31 @@ func _ready():
 	Globals.new_level.connect(on_new_level)
 	Globals.stat_change.connect(update_entity_info)
 
+func _physics_process(_delta):
+	if tilemap.get_cell_tile_data(0,tilemap.selected_tile_map):
+		pathfinder.cursor.show()		
+		pathfinder.show_cursor(tilemap.selected_tile_loc) 
+	else:
+		pathfinder.cursor.hide()
+		
 func battle_start():
 	turn_order_display.set_turn_data(Globals.turn_queue)
+	pathfinder.cursor.get_children()[0].highlight_entered.connect(on_body_entered)
+	pathfinder.cursor.get_children()[0].highlight_exited.connect(on_body_exited)
 	
+func on_body_entered(body):
+	temp_body = body
+	if temp_body is Enemy:
+		Globals.hover_entity = temp_body
+		UiBattle.toggle_enemy_details(Globals.hover_entity)
+	
+func on_body_exited(body):
+	if temp_body == body:
+		temp_body = null
+		if Globals.hover_entity is Enemy:
+			UiBattle.toggle_enemy_details(Globals.hover_entity)
+			Globals.hover_entity = null
+			
 func toggle_enemy_details(enemy: Enemy):
 	if enemy:
 		var entity_info = ENTITY_INFO.instantiate()

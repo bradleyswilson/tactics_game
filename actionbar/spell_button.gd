@@ -9,11 +9,13 @@ signal ability_used(index: int)
 
 func set_button_data(button_data: AbilityData) -> void:
 	cooldown.max_value = button_data.cooldown
+	if button_data.cooldown == 0:
+		cooldown.max_value = 1
 	texture_normal = button_data.texture
 
-	
 func update_cooldown(cooldown_array: Array, i: int) -> void:
 	timer.text = "%d" % cooldown_array[i]
+	cooldown.value = cooldown_array[i]
 
 var change_key = "":
 	set(value):
@@ -28,7 +30,6 @@ var change_key = "":
  
 func _ready():
 	change_key = "1"
-	cooldown.max_value = int(timer.text)
 	set_process(false)
  
 func _on_pressed():
