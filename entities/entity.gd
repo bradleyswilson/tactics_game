@@ -7,6 +7,7 @@ class_name Entity
 @export var action_bar_data: InventoryData
 @export var health = 100
 @export var texture = Texture2D
+@export var cd_array = []
 
 const MIN_HP: int = 0
 
@@ -21,8 +22,8 @@ func _on_entity_death(entity: Entity):
 	UiBattle.entity_info_container.hide()
 	entity.queue_free()
 	
-	var live_party = Globals.turn_queue.any(func(entity): return entity is PlayableEntity)
-	var live_enemies = Globals.turn_queue.any(func(entity): return entity is Enemy)
+	var live_party = Globals.turn_queue.any(func(ent): return ent is PlayableEntity)
+	var live_enemies = Globals.turn_queue.any(func(ent): return ent is Enemy)
 	if not live_party:
 		Globals.level_over.emit('lose')
 	

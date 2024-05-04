@@ -13,6 +13,7 @@ var hover_entity: Entity
 var turn_entity: Entity
 var turn_queue: Array[Entity]
 var entities_pos: Array[Vector2]
+var spell_ind: int
 
 func _ready():
 	hover_entity = null

@@ -12,6 +12,9 @@ func _ready():
 	health = 100
 	speed = 100
 	StatusEffects.on_entity_death.connect(_on_entity_death)
+	cd_array.resize(len(action_bar_data.slot_datas))
+	cd_array.fill(0)
+
 	
 func _on_entity_death(entity: Entity):
 	if entity == self:

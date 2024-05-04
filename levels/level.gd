@@ -79,8 +79,12 @@ func _physics_process(_delta):
 	else:
 		$HighlightInterface/Cursor.hide()
 		
-func show_range(ability_data: AbilityData) -> void:
+func show_range(ability_data: AbilityData, is_valid_cast: bool) -> void:
 	# turns on range indicators and sets ability data
+	if not is_valid_cast:
+		print("Cooldown not ready!")
+		return
+	
 	var ability_range = ability_data.ability_range
 	range_highlight.visible = not range_highlight.visible
 	
@@ -119,6 +123,11 @@ func _on_ability_confirm() -> void:
 				
 var spell_test = preload('res://ui/highlight_square.tscn')
 func ability_execute(casted_ability: AbilityData, cast_location: Vector2):
+	Globals.turn_entity.cd_array[Globals.spell_ind] = casted_ability.cooldown
+	Globals.spell_ind = -1
+	UiBattle.action_bar.update_action_bar(Globals.turn_entity.action_bar_data,
+										  Globals.turn_entity.cd_array)
+										
 	for n in spell_manager.get_children():
 		spell_manager.remove_child(n)
 		n.queue_free()

@@ -36,7 +36,6 @@ texture_progress = SubResource("CompressedTexture2D_xow8g")
 tint_progress = Color(0.345098, 0.345098, 0.345098, 0.537255)
 
 [node name="Timer" type="Label" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
