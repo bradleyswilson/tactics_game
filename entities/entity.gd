@@ -8,7 +8,7 @@ class_name Entity
 @export var health = 100
 @export var texture = Texture2D
 @export var cd_array = []
-@export var ap = 2
+@export var ap = 10
 
 const MIN_HP: int = 0
 

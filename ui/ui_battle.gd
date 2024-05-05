@@ -6,8 +6,11 @@ extends CanvasLayer
 @onready var turn_order_display = $TurnOrderDisplay
 @onready var tilemap = get_tree().get_nodes_in_group("tilemaps")[0]
 @onready var pathfinder = get_tree().get_nodes_in_group("pathfinder")[0]
-var temp_body
+@onready var cell_info_display = $CellInfoDisplay
+@onready var cid_texture_rect = $CellInfoDisplay/TextureRect
 
+
+var temp_body
 const ENTITY_INFO = preload("res://ui/entity_info.tscn")
 
 # Called when the node enters the scene tree for the first time.
@@ -32,15 +35,29 @@ func on_body_entered(body):
 	temp_body = body
 	if temp_body is Enemy:
 		Globals.hover_entity = temp_body
-		UiBattle.toggle_enemy_details(Globals.hover_entity)
+		toggle_enemy_details(Globals.hover_entity)
+	if temp_body is TileMap:
+		var cell = tilemap.local_to_map(tilemap.get_global_mouse_position()) - Vector2i(1,1)
+		if cell in Globals.gridData:
+			Globals.hover_terrain = Globals.gridData[cell]
+			toggle_terrain_details(Globals.hover_terrain)
 	
 func on_body_exited(body):
 	if temp_body == body:
 		temp_body = null
 		if Globals.hover_entity is Enemy:
-			UiBattle.toggle_enemy_details(Globals.hover_entity)
+			toggle_enemy_details(Globals.hover_entity)
 			Globals.hover_entity = null
+		if Globals.hover_terrain is CellData:
+			Globals.hover_terrain = null
+			toggle_terrain_details(Globals.hover_terrain)
 			
+func toggle_terrain_details(cell_data: CellData):
+	if cell_data:
+		cid_texture_rect.texture = cell_data.texture
+	else:
+		cid_texture_rect.texture = null
+		
 func toggle_enemy_details(enemy: Enemy):
 	if enemy:
 		var entity_info = ENTITY_INFO.instantiate()

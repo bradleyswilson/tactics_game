@@ -9,11 +9,12 @@ signal new_level()
 
 signal level_over(type: String)
 var hover_entity: Entity
-
+var hover_terrain: CellData
 var turn_entity: Entity
 var turn_queue: Array[Entity]
 var entities_pos: Array[Vector2]
 var spell_ind: int
+var gridData: Dictionary = {}
 
 func _ready():
 	hover_entity = null

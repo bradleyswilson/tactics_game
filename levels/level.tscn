@@ -15,6 +15,10 @@ script = ExtResource("1_nrfdk")
 [node name="Tilemap" parent="." instance=ExtResource("2_qa0yh")]
 y_sort_enabled = true
 collision_visibility_mode = 0
+layer_0/name = "layer 0"
+layer_1/name = "layer 1"
+layer_1/z_index = 1
+layer_1/navigation_enabled = false
 
 [node name="Party" type="Node2D" parent="."]
 y_sort_enabled = true

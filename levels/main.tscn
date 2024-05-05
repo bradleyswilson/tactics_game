@@ -37,8 +37,7 @@ offset_right = 62.5
 offset_bottom = 27.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "Bardle's Battle:
-Press to start"
+text = "Dive Deeper..."
 
 [node name="LevelOver" type="Control" parent="StartScreen"]
 layout_mode = 3

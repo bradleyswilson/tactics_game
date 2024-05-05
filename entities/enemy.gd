@@ -21,10 +21,10 @@ func get_available_actions():
 	# Get move data and other data
 	var move_data = Globals.turn_entity.action_bar_data.slot_datas[0].item_data
 	var ability_data = Globals.turn_entity.action_bar_data.slot_datas[-1]
-	
+
 	# Get move candidates
 	move_candidates = pathfinder.get_range_squares(move_data.ability_range, self_pos, true)
-	
+
 	# set variables for selection
 	var selected_move: Vector2
 	var selected_ability: AbilityData

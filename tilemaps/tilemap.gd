@@ -10,12 +10,19 @@ var target_position: Vector2
 var astar_grid = AStarGrid2D.new()
 var iso_offset: Vector2i
 var should_move: bool
+var cell_local_pos: Array
 
-const highlight_atlas_pos = Vector2i(2,0)
+enum layers{
+	level0 = 0,
+	level1 = 1
+}
+const brain_coral_pos = Vector2i(2, 0)
 const main_source = 0
 
+var cells = get_used_cells(layers.level1)
+
 func _use_tile_data_runtime_update(layer: int, _coords: Vector2i) -> bool:
-	return layer in [0]
+	return layer in [0, 1]
 	
 func _tile_data_runtime_update(_layer: int, _coords: Vector2i, tile_data: TileData) -> void:
 	tile_data.set_collision_polygons_count(0, 0)
@@ -29,6 +36,20 @@ func _ready():
 	astar_grid.update()
 	Globals.start_turn.connect(on_start_turn)
 	Globals.end_turn.connect(on_end_turn)
+	set_cell_data()
+	
+	for cell in cells:
+		astar_grid.set_point_solid(cell + Vector2i(1,1) + iso_offset)
+
+	
+func set_cell_data():
+	for cell in cells:
+		Globals.gridData[cell] = CellData.new()
+		cell_local_pos.append(map_to_local(cell + Vector2i(1,1)))
+
+	Globals.gridData[Vector2i(15,0)] = load("res://tilemaps/brain_coral.tres")
+	#Globals.gridData[Vector2i(15,0)].cell_inventory = load("res://inventory/test_inv.tres")
+
 
 func on_start_turn():
 	# makes entities un-navigateable 
@@ -132,7 +153,7 @@ func _process(delta):
 		player_tile_map = local_to_map(Globals.entities_pos[0])
 		selected_tile_loc = map_to_local(selected_tile_map)
 		player_tile_loc = map_to_local(player_tile_map)
-		
+	print(selected_tile_loc)
 	if ability_path.is_empty() or not should_move:
 		return
 	else:
