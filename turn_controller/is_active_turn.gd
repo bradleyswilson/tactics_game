@@ -12,23 +12,26 @@ func _ready():
 	#set_process(false)
 	
 func _enter_state() -> void:
-	Globals.turn_entity = turn_entity
 	Globals.start_turn.emit()
 	
 	for i in range(turn_entity.cd_array.size()):
 		turn_entity.cd_array[i] = max(0, turn_entity.cd_array[i] - 1)
 	
 	turn_entity.toggle_outline(true)
+	turn_entity.ap = 2
 	if turn_entity is PlayableEntity:
 		UiBattle.action_bar.set_player_ability_data(turn_entity.action_bar_data, turn_entity.cd_array)
 		turn_entity.action_bar_data.ability_used.connect(on_ability_used)
 	
 	elif turn_entity is Enemy:
 		turn_entity.get_available_actions()
+	Globals.turn_entity = turn_entity
+	print(turn_entity.ap)
 
 func _exit_state():
 	Globals.end_turn.emit()
 	turn_entity.toggle_outline(false)
+	turn_entity.ap = 2
 	if turn_entity is PlayableEntity:
 		turn_entity.action_bar_data.ability_used.disconnect(on_ability_used)
 

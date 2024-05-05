@@ -19,7 +19,7 @@ func show_cursor(source_loc: Vector2):
 	cursor_square.top_level = true
 
 func show_range(ability_range: int, source_loc: Vector2, collisions: bool):
-	# Clear existing children from the highlight interface, if needed
+	# toggles range indicators
 	for n in abilities.get_children():
 		n.queue_free()
 	
@@ -35,7 +35,13 @@ func show_range(ability_range: int, source_loc: Vector2, collisions: bool):
 	if not abilities.visible:
 		for n in abilities.get_children():
 			n.queue_free()
-			
+
+func clear_range():
+	# clear range indicators, used on a fresh turn.
+	for n in abilities.get_children():
+		n.queue_free()
+	abilities.hide()
+		
 func get_range_squares(movement_range: int, source_loc: Vector2, collisions: bool):
 	var move_options: Array = []
 	for dx in range(-movement_range, movement_range + 1):

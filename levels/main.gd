@@ -33,7 +33,6 @@ func toggle_inventory_interface(_external_inventory_owner = null) -> void:
 	#else: 
 		#inventory_interface.clear_external_inventory()
 
-
 func on_start_battle():
 	button.hide()
 	level.show()

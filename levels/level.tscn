@@ -23,6 +23,8 @@ y_sort_enabled = true
 z_index = 1
 y_sort_enabled = true
 
+[node name="ExternalObjects" type="Node2D" parent="."]
+
 [node name="GameState" type="Node" parent="."]
 script = ExtResource("3_wmbld")
 

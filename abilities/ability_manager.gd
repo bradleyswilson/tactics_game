@@ -5,7 +5,7 @@ var grabbed_ability: SlotData
 @onready var highlight_interface = $HighlightInterface
 @onready var range_highlight = $HighlightInterface/Abilities
 @onready var tilemap = get_tree().get_nodes_in_group("tilemaps")[0]
-@onready var casting_ability
+@onready var current_cast: AbilityData
 @onready var live_abilities = $LiveAbilities
 
 var selected_body: Entity
@@ -16,7 +16,7 @@ signal ability_confirm()
 func _input(event):
 	if event.is_action_released("confirm_click"):
 		selected_body = Globals.hover_entity
-		_on_ability_confirm(casting_ability)
+		_on_ability_confirm(current_cast)
 
 func ability_eval(ability_data: AbilityData, is_valid_cast: bool) -> AbilityData:
 	"""
@@ -28,6 +28,11 @@ func ability_eval(ability_data: AbilityData, is_valid_cast: bool) -> AbilityData
 		print("Cooldown not ready!")
 		return null
 	
+	if Globals.turn_entity.ap == 0 or \
+	(Globals.turn_entity.ap == 1 and ability_data.ability_name == 'move'): 
+		print("already moved!")
+		return null
+
 	# show range indicators
 	range_highlight.visible = not range_highlight.visible
 	var collisions = true if ability_data.ability_name == 'move' else false
@@ -40,19 +45,21 @@ func ability_eval(ability_data: AbilityData, is_valid_cast: bool) -> AbilityData
 		if tilemap.get_cell_tile_data(0, tilemap.local_to_map(i.global_position)) == null:
 			i.queue_free()
 		
-	casting_ability = ability_data if range_highlight.visible else null
-	return(casting_ability)
+	current_cast = ability_data if range_highlight.visible else null
+	return(current_cast)
 
 func _on_ability_confirm(casting_ability: AbilityData) -> void:
 	"""
 	if a casted ability is loaded, matches ability type, checks range,
 	# and calls execute function
 	"""
+	
 	if casting_ability:
 		match [casting_ability.ability_type]:
 			["player_movement"]:
 				if tilemap.is_target_valid(casting_ability, Globals.turn_entity.global_position, get_global_mouse_position()):
 					range_highlight.visible = not range_highlight.visible
+					Globals.turn_entity.ap -= 1
 				else:
 					print('invalid movement_target') # placeholder
 			["RangedAOE"]:
@@ -60,6 +67,7 @@ func _on_ability_confirm(casting_ability: AbilityData) -> void:
 				if tilemap.is_target_valid(casting_ability, Globals.turn_entity.global_position, get_global_mouse_position()):
 					ability_execute(casting_ability, tilemap.selected_tile_loc)
 					range_highlight.visible = not range_highlight.visible
+					Globals.turn_entity.ap = 0
 					casting_ability = null
 				else:
 					print('ability exceeds range') # placeholder
@@ -67,19 +75,23 @@ func _on_ability_confirm(casting_ability: AbilityData) -> void:
 				
 var spell_test = preload('res://ui/highlight_square.tscn')
 func ability_execute(casted_ability: AbilityData, cast_location: Vector2):
-	update_cooldown_display(casted_ability)
-										
-	for n in live_abilities.get_children():
-		live_abilities.remove_child(n)
-		n.queue_free()
-		
-	match [casted_ability.ability_type]:
-		["RangedAOE"]:
-			var spell = spell_test.instantiate()
-			live_abilities.add_child(spell)
-			spell.global_position = cast_location
-			spell.modulate = Color(0,1,0)
-			casted_ability._damage(casted_ability, selected_body)
+	if Globals.turn_entity.ap > 0:
+		update_cooldown_display(casted_ability)
+	
+		## TODO not sure if this is correct								
+		for n in live_abilities.get_children():
+			live_abilities.remove_child(n)
+			n.queue_free()
+			
+		match [casted_ability.ability_type]:
+			["RangedAOE"]:
+				var spell = spell_test.instantiate()
+				live_abilities.add_child(spell)
+				spell.global_position = cast_location
+				spell.modulate = Color(0,1,0)
+				casted_ability._damage(casted_ability, selected_body)
+
+
 
 func update_cooldown_display(casted_ability: AbilityData):
 	Globals.turn_entity.cd_array[Globals.spell_ind] = casted_ability.cooldown
