@@ -41,7 +41,6 @@ func _ready():
 	for cell in cells:
 		astar_grid.set_point_solid(cell + Vector2i(1,1) + iso_offset)
 
-	
 func set_cell_data():
 	for cell in cells:
 		Globals.gridData[cell] = CellData.new()
@@ -153,7 +152,7 @@ func _process(delta):
 		player_tile_map = local_to_map(Globals.entities_pos[0])
 		selected_tile_loc = map_to_local(selected_tile_map)
 		player_tile_loc = map_to_local(player_tile_map)
-	print(selected_tile_loc)
+
 	if ability_path.is_empty() or not should_move:
 		return
 	else:

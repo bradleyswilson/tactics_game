@@ -9,14 +9,16 @@ var grabbed_ability: SlotData
 @onready var live_abilities = $LiveAbilities
 
 var selected_body: Entity
-
+var selected_terrain: CellData
 signal ability_confirm()
 
 	
 func _input(event):
 	if event.is_action_released("confirm_click"):
 		selected_body = Globals.hover_entity
+		selected_terrain = Globals.hover_terrain
 		_on_ability_confirm(current_cast)
+		
 
 func ability_eval(ability_data: AbilityData, is_valid_cast: bool) -> AbilityData:
 	"""
@@ -53,25 +55,16 @@ func _on_ability_confirm(casting_ability: AbilityData) -> void:
 	if a casted ability is loaded, matches ability type, checks range,
 	# and calls execute function
 	"""
-	
 	if casting_ability:
+		if tilemap.is_target_valid(casting_ability, Globals.turn_entity.global_position, get_global_mouse_position()):
+			range_highlight.visible = not range_highlight.visible
+		
 		match [casting_ability.ability_type]:
 			["player_movement"]:
-				if tilemap.is_target_valid(casting_ability, Globals.turn_entity.global_position, get_global_mouse_position()):
-					range_highlight.visible = not range_highlight.visible
-					Globals.turn_entity.ap -= 1
-				else:
-					print('invalid movement_target') # placeholder
-			["RangedAOE"]:
-				print(casting_ability)
-				if tilemap.is_target_valid(casting_ability, Globals.turn_entity.global_position, get_global_mouse_position()):
-					ability_execute(casting_ability, tilemap.selected_tile_loc)
-					range_highlight.visible = not range_highlight.visible
-					Globals.turn_entity.ap = 0
-					casting_ability = null
-				else:
-					print('ability exceeds range') # placeholder
-
+				Globals.turn_entity.ap -= 1
+			[_]:
+				ability_execute(casting_ability, tilemap.selected_tile_loc)
+				Globals.turn_entity.ap = 0		
 				
 var spell_test = preload('res://ui/highlight_square.tscn')
 func ability_execute(casted_ability: AbilityData, cast_location: Vector2):
@@ -90,7 +83,8 @@ func ability_execute(casted_ability: AbilityData, cast_location: Vector2):
 				spell.global_position = cast_location
 				spell.modulate = Color(0,1,0)
 				casted_ability._damage(casted_ability, selected_body)
-
+			["mining"]:
+				casted_ability._mine(casted_ability, selected_terrain)
 
 
 func update_cooldown_display(casted_ability: AbilityData):

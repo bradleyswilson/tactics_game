@@ -26,6 +26,7 @@ func _on_gui_input(event) -> void:
 			or event.button_index == MOUSE_BUTTON_RIGHT) \
 			and event.is_pressed():
 		slot_clicked.emit(get_index(), event.button_index)
+
 	
 func _unhandled_key_input(event) -> void:
 	if event is InputEventKey and event.is_pressed():

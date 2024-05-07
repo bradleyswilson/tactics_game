@@ -5,27 +5,28 @@ var external_inventory_owner
 
 @onready var grabbed_slot = $GrabbedSlot
 @onready var player_inventory: PanelContainer = $PlayerInventory
+@onready var external_inventory = $ExternalInventory
 
 func _physics_process(_delta) -> void:
 	if grabbed_slot.visible:
 		grabbed_slot.global_position = get_global_mouse_position() + Vector2(5,5)
 	
-#func set_external_inventory(_external_inventory_owner) -> void:
-	#external_inventory_owner = _external_inventory_owner
-	#var inventory_data = external_inventory_owner.inventory_data
-	#
-	#inventory_data.inventory_interact.connect(on_inventory_interact)
-	#external_inventory.set_inventory_data(inventory_data)
-	#external_inventory.show()
+func set_resource_inventory(cell_data: CellData) -> void:
+	var cell_inventory_data = cell_data.cell_inventory
 	
-#func clear_external_inventory() -> void:
-	#if external_inventory_owner:
-		#var inventory_data = external_inventory_owner.inventory_data
-		#
-		#inventory_data.inventory_interact.disconnect(on_inventory_interact)
-		#external_inventory.clear_inventory_data(inventory_data)
-		#external_inventory.hide()
-		#external_inventory_owner = null
+	cell_inventory_data.inventory_interact.connect(on_inventory_interact)
+	external_inventory.set_inventory_data(cell_inventory_data)
+	external_inventory.show()
+	self.show()
+	
+func clear_external_inventory() -> void:
+	if external_inventory_owner:
+		var inventory_data = external_inventory_owner.inventory_data
+		
+		inventory_data.inventory_interact.disconnect(on_inventory_interact)
+		external_inventory.clear_inventory_data(inventory_data)
+		external_inventory.hide()
+		external_inventory_owner = null
 	
 func set_player_inventory_data(inventory_data: InventoryData) -> void:
 	inventory_data.inventory_interact.connect(on_inventory_interact)
@@ -33,7 +34,6 @@ func set_player_inventory_data(inventory_data: InventoryData) -> void:
 
 func on_inventory_interact(inventory_data: InventoryData, 
 		index: int, button: int) -> void:
-	print(index)
 	match [grabbed_slot_data, button]:
 		[null, MOUSE_BUTTON_LEFT]:
 			grabbed_slot_data = inventory_data.grab_slot_data(index)

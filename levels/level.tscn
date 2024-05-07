@@ -53,3 +53,9 @@ script = ExtResource("5_u5pwq")
 visible = false
 
 [node name="LiveAbilities" type="Node2D" parent="GameState/AbilityManager"]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_left = 240.0
+offset_top = 256.0
+offset_right = 280.0
+offset_bottom = 296.0

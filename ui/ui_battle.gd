@@ -1,13 +1,14 @@
 extends CanvasLayer
 
 @onready var inventory_interface = $InventoryInterface
-@onready var action_bar = $ActionBar
+@onready var action_bar = $PlayerStats/ActionBar
 @onready var entity_info_container = $EntityInfoContainer
 @onready var turn_order_display = $TurnOrderDisplay
 @onready var tilemap = get_tree().get_nodes_in_group("tilemaps")[0]
 @onready var pathfinder = get_tree().get_nodes_in_group("pathfinder")[0]
 @onready var cell_info_display = $CellInfoDisplay
 @onready var cid_texture_rect = $CellInfoDisplay/TextureRect
+@onready var external_inventory = $InventoryInterface/ExternalInventory
 
 
 var temp_body

@@ -23,3 +23,5 @@ func _damage(ability_data: AbilityData, target: Entity):
 			StatusEffects.on_entity_death.emit(target)
 	#print(target.health)
 
+func _mine(ability_data: AbilityData, target: CellData):
+	UiBattle.inventory_interface.set_resource_inventory(target)

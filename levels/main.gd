@@ -2,6 +2,7 @@ extends Node
 
 @onready var player: CharacterBody2D = $Level/Party/Player
 @onready var inventory_interface: Control = UiBattle.inventory_interface
+
 @onready var button = $StartScreen/Control/Button
 @onready var level = $Level
 
@@ -28,10 +29,7 @@ func toggle_inventory_interface(_external_inventory_owner = null) -> void:
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	else:
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	#if external_inventory_owner and inventory_interface.visible:
-		#inventory_interface.set_external_inventory(external_inventory_owner)
-	#else: 
-		#inventory_interface.clear_external_inventory()
+
 
 func on_start_battle():
 	button.hide()

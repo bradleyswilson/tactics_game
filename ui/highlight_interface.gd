@@ -58,7 +58,6 @@ func get_range_squares(movement_range: int, source_loc: Vector2, collisions: boo
 func check_path(source_pos: Vector2, target_positions: Array, 
 				movement_range: int, collisions: bool):
 	var invalid_cells = tilemap.cell_local_pos
-	print(Globals.entities_pos)
 	var new_target_positions: Array = []
 	for target_pos in target_positions:
 		if tilemap.get_cell_tile_data(0, tilemap.local_to_map(target_pos)) != null:

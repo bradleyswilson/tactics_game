@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="AbilityData" load_steps=3 format=3 uid="uid://bg7t5rh4j61s4"]
+
+[ext_resource type="Script" path="res://abilities/ability_data.gd" id="1_r2ttg"]
+[ext_resource type="Texture2D" uid="uid://duq5qjns7o6ww" path="res://items/item_atlas.tres" id="2_towbv"]
+
+[resource]
+script = ExtResource("1_r2ttg")
+ability_name = "mine"
+ability_type = "mining"
+ability_damage = 0.0
+ability_range = 1
+cooldown = 0.0
+name = "mine"
+description = "mine that shit"
+stackable = false
+texture = ExtResource("2_towbv")

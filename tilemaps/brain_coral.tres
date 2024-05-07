@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="CellData" load_steps=4 format=3 uid="uid://b7u1wu5mf0cy5"]
+[gd_resource type="Resource" script_class="CellData" load_steps=5 format=3 uid="uid://b7u1wu5mf0cy5"]
 
 [ext_resource type="Script" path="res://tilemaps/interactable_tile.gd" id="1_lcpl4"]
+[ext_resource type="Resource" uid="uid://basmht2gja474" path="res://inventory/test_inv.tres" id="1_oukwy"]
 [ext_resource type="Texture2D" uid="uid://4jeulpiat0yl" path="res://assets/iso_tiles.aseprite" id="2_tr0hy"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wgn7s"]
@@ -10,4 +11,5 @@ region = Rect2(32, 0, 32, 32)
 [resource]
 script = ExtResource("1_lcpl4")
 isOccupied = false
+cell_inventory = ExtResource("1_oukwy")
 texture = SubResource("AtlasTexture_wgn7s")
