@@ -8,10 +8,6 @@ class_name LevelParent
 @onready var enemies = $Enemies
 @onready var tilemap = $Tilemap
 
-#@onready var range_highlight = $HighlightInterface/Abilities
-@onready var highlight_interface = $GameState/AbilityManager/HighlightInterface
-@onready var cursor = $GameState/AbilityManager/HighlightInterface/Cursor
-
 @onready var active_entities: Array
 @onready var turn_manager = $GameState/TurnManager
 
@@ -26,7 +22,7 @@ func _ready():
 	active_entities += $Party.get_children()
 	active_entities += $Enemies.get_children()
 	#TODO sort by initiative?
-	_update()
+
 	
 func start_battle():
 	var char1 = party_member.instantiate()

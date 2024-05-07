@@ -47,7 +47,6 @@ func set_cell_data():
 		cell_local_pos.append(map_to_local(cell + Vector2i(1,1)))
 
 	Globals.gridData[Vector2i(15,0)] = load("res://tilemaps/brain_coral.tres")
-	#Globals.gridData[Vector2i(15,0)].cell_inventory = load("res://inventory/test_inv.tres")
 
 
 func on_start_turn():
@@ -58,8 +57,7 @@ func on_start_turn():
 func on_end_turn():
 	# clear solids to rest on a new grid
 	astar_grid.fill_solid_region(astar_grid.region, false)
-	
-
+	elec
 #TODO clean up movement
 func get_enemy_moves(shape_tiles: Array, ability_data: AbilityData):
 	var offset_x = Vector2(-32,-16)

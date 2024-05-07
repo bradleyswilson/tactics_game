@@ -2,21 +2,11 @@ extends Node2D
 
 @onready var abilities = $Abilities
 @onready var Square = preload("res://ui/highlight_square.tscn")
-@onready var cursor_square = Square.instantiate()
-@onready var cursor = $Cursor
 
 var offset_x = Vector2(-32,-16)
 var offset_y = Vector2(32, -16)
 
 @onready var tilemap = get_tree().get_nodes_in_group("tilemaps")[0]
-
-func _ready():
-	cursor.add_child(cursor_square)
-
-func show_cursor(source_loc: Vector2):
-	cursor_square.global_position = source_loc
-	cursor_square.modulate = Color(0,0,1)
-	cursor_square.top_level = true
 
 func show_range(ability_range: int, source_loc: Vector2, collisions: bool):
 	# toggles range indicators

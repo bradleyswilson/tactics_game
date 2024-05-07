@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://4g07xnpwmo8j"]
+[gd_scene load_steps=9 format=3 uid="uid://4g07xnpwmo8j"]
 
 [ext_resource type="Script" path="res://levels/level.gd" id="1_nrfdk"]
 [ext_resource type="PackedScene" uid="uid://dvgrs2m7skky1" path="res://tilemaps/tilemap.tscn" id="2_qa0yh"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://ui/highlight_interface.gd" id="5_u5pwq"]
 [ext_resource type="Script" path="res://abilities/ability_manager.gd" id="6_4mrus"]
 [ext_resource type="Script" path="res://turn_controller/turn_controller.gd" id="7_8cf6q"]
+[ext_resource type="Script" path="res://ui/highlight_cursor.gd" id="8_1bbl4"]
 [ext_resource type="Script" path="res://turn_controller/is_active_turn.gd" id="8_jos0q"]
 
 [node name="Level" type="Node2D"]
@@ -19,6 +20,10 @@ layer_0/name = "layer 0"
 layer_1/name = "layer 1"
 layer_1/z_index = 1
 layer_1/navigation_enabled = false
+selected_tile_map = null
+selected_tile_loc = null
+player_tile_map = null
+player_tile_loc = null
 
 [node name="Party" type="Node2D" parent="."]
 y_sort_enabled = true
@@ -48,14 +53,9 @@ y_sort_enabled = true
 script = ExtResource("5_u5pwq")
 
 [node name="Cursor" type="Node2D" parent="GameState/AbilityManager/HighlightInterface"]
+script = ExtResource("8_1bbl4")
 
 [node name="Abilities" type="Node2D" parent="GameState/AbilityManager/HighlightInterface"]
 visible = false
 
 [node name="LiveAbilities" type="Node2D" parent="GameState/AbilityManager"]
-
-[node name="TextureRect" type="TextureRect" parent="."]
-offset_left = 240.0
-offset_top = 256.0
-offset_right = 280.0
-offset_bottom = 296.0

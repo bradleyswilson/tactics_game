@@ -1,13 +1,19 @@
 extends Node
 
 signal stat_change
+
 signal get_enemy_moves(Vector2)
 signal return_enemy_moves(Array)
 signal start_turn()
 signal end_turn()
 signal new_level()
-
 signal level_over(type: String)
+
+## Highlight interface - cursor
+signal toggle_enemy_details(Entity)
+signal toggle_terrain_details(CellData)
+
+
 var hover_entity: Entity
 var hover_terrain: CellData
 var turn_entity: Entity
