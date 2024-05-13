@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://dqshwc4kq63g5"]
 
 [ext_resource type="Script" path="res://levels/main.gd" id="1_hx4j8"]
+[ext_resource type="Texture2D" uid="uid://b61alaw0t7ls7" path="res://assets/background_test2.aseprite" id="2_6s7uf"]
 [ext_resource type="PackedScene" uid="uid://4g07xnpwmo8j" path="res://levels/level.tscn" id="2_ggtlj"]
-[ext_resource type="Texture2D" uid="uid://tnq0xgetnsv6" path="res://assets/background_test.aseprite" id="2_x3vwj"]
 [ext_resource type="Script" path="res://ui/start_screen.gd" id="3_2e4f1"]
 
 [node name="Main" type="Node"]
@@ -17,7 +17,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_x3vwj")
+texture = ExtResource("2_6s7uf")
 
 [node name="Level" parent="." instance=ExtResource("2_ggtlj")]
 visible = false

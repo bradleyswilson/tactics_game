@@ -29,7 +29,7 @@ func start_battle():
 	var char2 = party_member.instantiate()
 	party.add_child(char1)
 	party.add_child(char2)
-	party.get_children()[0].global_position = tilemap.map_to_local(Vector2i(9,4))
+	party.get_children()[0].global_position = tilemap.map_to_local(Vector2i(12,5))
 	party.get_children()[1].global_position = tilemap.map_to_local(Vector2i(12,4))
 	
 	var enemy1 = enemy.instantiate()

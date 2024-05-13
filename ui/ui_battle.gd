@@ -1,5 +1,7 @@
 extends CanvasLayer
 
+@onready var inventory_interface = $InventoryInterface
+@onready var action_bar = $PlayerStats/ActionBar
 @onready var entity_info_container = $EntityInfoContainer
 @onready var turn_order_display = $TurnOrderDisplay
 @onready var cid_texture_rect = $CellInfoDisplay/TextureRect

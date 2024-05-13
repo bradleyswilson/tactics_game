@@ -1,18 +1,14 @@
 extends Node2D
 
-@onready var Square = preload("res://ui/highlight_square.tscn")
-@onready var cursor_square = Square.instantiate()
-
+@onready var cursor_square = $HighlightSquare
+@onready var tilemap = get_tree().get_nodes_in_group("tilemaps")[0]
 var temp_body
 
-@onready var tilemap = get_tree().get_nodes_in_group("tilemaps")[0]
-
 func _ready():
-	add_child(cursor_square)
-	get_children()[0].highlight_entered.connect(on_body_entered)
-	get_children()[0].highlight_exited.connect(on_body_exited)
+	cursor_square.highlight_entered.connect(on_body_entered)
+	cursor_square.highlight_exited.connect(on_body_exited)
 
-func _process(_delta):
+func _physics_process(_delta):
 	if tilemap.get_cell_tile_data(0,tilemap.selected_tile_map):
 		show()		
 		show_cursor(tilemap.selected_tile_loc) 

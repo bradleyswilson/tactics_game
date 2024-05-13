@@ -22,7 +22,7 @@ const main_source = 0
 var cells = get_used_cells(layers.level1)
 
 func _use_tile_data_runtime_update(layer: int, _coords: Vector2i) -> bool:
-	return layer in [0, 1]
+	return layer in [0]
 	
 func _tile_data_runtime_update(_layer: int, _coords: Vector2i, tile_data: TileData) -> void:
 	tile_data.set_collision_polygons_count(0, 0)
@@ -57,7 +57,7 @@ func on_start_turn():
 func on_end_turn():
 	# clear solids to rest on a new grid
 	astar_grid.fill_solid_region(astar_grid.region, false)
-	elec
+
 #TODO clean up movement
 func get_enemy_moves(shape_tiles: Array, ability_data: AbilityData):
 	var offset_x = Vector2(-32,-16)

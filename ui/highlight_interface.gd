@@ -8,13 +8,14 @@ var offset_y = Vector2(32, -16)
 
 @onready var tilemap = get_tree().get_nodes_in_group("tilemaps")[0]
 
+
 func show_range(ability_range: int, source_loc: Vector2, collisions: bool):
 	# toggles range indicators
 	for n in abilities.get_children():
 		n.queue_free()
 	
 	var indicator_positions = get_range_squares(ability_range, source_loc, collisions)
-
+	#var indicator_positions = get_plus_squares(ability_range, source_loc, collisions)
 	for ind in indicator_positions:
 		var square = Square.instantiate()
 		abilities.add_child(square)
@@ -45,6 +46,26 @@ func get_range_squares(movement_range: int, source_loc: Vector2, collisions: boo
 										  movement_range, collisions)
 	return(new_target_positions)
 
+func get_plus_squares(movement_range: int, source_loc: Vector2, collisions: bool):
+	var move_options: Array = []
+	for dx in range(-movement_range, movement_range + 1):
+		if dx != 0:
+			var pos_x = dx * offset_x.x * 0.5
+			var pos_y = dx * offset_x.y * 0.5
+			var target_position = source_loc +  Vector2(pos_x, pos_y)
+			move_options.append(target_position)
+		
+	for dy in range(-movement_range, movement_range + 1):
+		if dy != 0:
+			var pos_x = dy * offset_y.x * 0.5
+			var pos_y = dy * offset_y.y * 0.5
+			var target_position = source_loc +  Vector2(pos_x, pos_y)
+			move_options.append(target_position)
+	#var new_target_positions = check_path(source_loc, move_options, \
+	#									  movement_range, collisions)
+	return(move_options)
+	
+	
 func check_path(source_pos: Vector2, target_positions: Array, 
 				movement_range: int, collisions: bool):
 	var invalid_cells = tilemap.cell_local_pos

@@ -1,7 +1,7 @@
 extends Area2D
 
-signal highlight_entered(Entity)
-signal highlight_exited(Entity)
+signal highlight_entered(body)
+signal highlight_exited(body)
 #func _on_mouse_entered():
 #	highlight_data.emit(get_global_mouse_position()) # Replace with function body.
 
