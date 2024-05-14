@@ -5,6 +5,7 @@ class_name AbilityData
 @export var ability_type: String = ""
 @export var ability_damage: float = 0.0
 @export var ability_range: int
+@export var range_type: String = ""
 @export var cooldown : float
 
 func _try_damage(ability_data: AbilityData, target: Entity):

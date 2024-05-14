@@ -1,9 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://c8uecxd8s3h06"]
+[gd_scene load_steps=4 format=3 uid="uid://c8uecxd8s3h06"]
 
 [ext_resource type="Script" path="res://abilities/ability_manager.gd" id="1_unc00"]
 [ext_resource type="Script" path="res://ui/highlight_interface.gd" id="2_dxnci"]
 [ext_resource type="Script" path="res://ui/highlight_cursor.gd" id="3_xehj4"]
-[ext_resource type="PackedScene" uid="uid://hi1ad8hkln8l" path="res://ui/highlight_square.tscn" id="4_erb7k"]
 
 [node name="AbilityManager" type="Node2D"]
 top_level = true
@@ -16,8 +15,6 @@ script = ExtResource("2_dxnci")
 
 [node name="Cursor" type="Node2D" parent="HighlightInterface"]
 script = ExtResource("3_xehj4")
-
-[node name="HighlightSquare" parent="HighlightInterface/Cursor" instance=ExtResource("4_erb7k")]
 
 [node name="Abilities" type="Node2D" parent="HighlightInterface"]
 visible = false

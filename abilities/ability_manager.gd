@@ -10,6 +10,9 @@ var grabbed_ability: SlotData
 
 var selected_body: Entity
 var selected_terrain: CellData
+var last_clicked: AbilityData
+var toggle_count = 0
+
 signal ability_confirm()
 
 	
@@ -24,7 +27,6 @@ func ability_eval(ability_data: AbilityData, is_valid_cast: bool) -> AbilityData
 	"""
 	Displays range indicators, returns ability data if highlight is on
 	"""
-	
 	# if cast signal isn't valid (usually from CD, return nothing immediately)
 	if not is_valid_cast:
 		print("Cooldown not ready!")
@@ -34,11 +36,16 @@ func ability_eval(ability_data: AbilityData, is_valid_cast: bool) -> AbilityData
 	(Globals.turn_entity.ap == 1 and ability_data.ability_name == 'move'): 
 		print("already moved!")
 		return null
-
+	
+	# handles if a user clicks another spell instead of the same spell
+	if ability_data == last_clicked or toggle_count == 0:
+		toggle_count += 1
+		range_highlight.visible = not range_highlight.visible
+	
 	# show range indicators
-	range_highlight.visible = not range_highlight.visible
+	#range_highlight.visible = not range_highlight.visible
 	var collisions = true if ability_data.ability_name == 'move' else false
-	highlight_interface.show_range(ability_data.ability_range, 
+	highlight_interface.show_range(ability_data, 
 									Globals.entities_pos[0],
 									collisions)
 	
@@ -48,6 +55,7 @@ func ability_eval(ability_data: AbilityData, is_valid_cast: bool) -> AbilityData
 			i.queue_free()
 		
 	current_cast = ability_data if range_highlight.visible else null
+	last_clicked = ability_data
 	return(current_cast)
 
 func _on_ability_confirm(casting_ability: AbilityData) -> void:
@@ -55,10 +63,16 @@ func _on_ability_confirm(casting_ability: AbilityData) -> void:
 	if a casted ability is loaded, matches ability type, checks range,
 	# and calls execute function
 	"""
+	toggle_count = 0 
 	if casting_ability:
 		if tilemap.is_target_valid(casting_ability, Globals.turn_entity.global_position, get_global_mouse_position()):
+			# remove range indicators
 			range_highlight.visible = not range_highlight.visible
-		
+			
+			# reset cursor
+			highlight_interface.cursor.remove_cursors()
+			highlight_interface.shown_positions = []
+			
 		match [casting_ability.ability_type]:
 			["player_movement"]:
 				Globals.turn_entity.ap -= 1

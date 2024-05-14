@@ -15,7 +15,6 @@ var selected_body
 var temp_body
 var casting_ability: AbilityData
 
-signal ability_confirmed(ability_data: AbilityData)
 
 func _ready():
 	start_battle()

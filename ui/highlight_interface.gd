@@ -2,30 +2,57 @@ extends Node2D
 
 @onready var abilities = $Abilities
 @onready var Square = preload("res://ui/highlight_square.tscn")
+@onready var cursor = $Cursor
+@onready var cursor_visible = false
+@onready var shown_positions: Array
 
 var offset_x = Vector2(-32,-16)
 var offset_y = Vector2(32, -16)
-
+var mouse_pos 
 @onready var tilemap = get_tree().get_nodes_in_group("tilemaps")[0]
 
+func _process(_delta):
+	mouse_pos = get_global_mouse_position()
+	check_cursor(shown_positions, mouse_pos)
 
-func show_range(ability_range: int, source_loc: Vector2, collisions: bool):
+func show_range(ability_data: AbilityData, source_loc: Vector2, collisions: bool):
 	# toggles range indicators
+	var indicator_positions
+	var ability_range = ability_data.ability_range
 	for n in abilities.get_children():
 		n.queue_free()
+	for n in cursor.get_children():
+		n.queue_free()
 	
-	var indicator_positions = get_range_squares(ability_range, source_loc, collisions)
-	#var indicator_positions = get_plus_squares(ability_range, source_loc, collisions)
+	match [ability_data.range_type]:
+		["Free"]:
+			indicator_positions = get_range_squares(ability_range, source_loc, collisions)
+			cursor_visible = false
+		["Line"]:
+			indicator_positions = get_plus_squares(ability_range, source_loc, collisions)
+			cursor_visible = false
+		["Cluster"]:
+			indicator_positions = get_range_squares(ability_range, source_loc, collisions)	
+			cursor.cursor_range = 1
+			if cursor_visible == false:
+				cursor.add_cursors(5)
+				cursor_visible = true
+			else:
+				cursor.remove_cursors()
+				cursor_visible = false
+	
 	for ind in indicator_positions:
 		var square = Square.instantiate()
 		abilities.add_child(square)
 		square.global_position = ind
 		if square.global_position == source_loc:
 			square.queue_free()
-				
+			
+	shown_positions = indicator_positions
 	if not abilities.visible:
 		for n in abilities.get_children():
 			n.queue_free()
+		shown_positions = []
 
 func clear_range():
 	# clear range indicators, used on a fresh turn.
@@ -84,3 +111,22 @@ func check_path(source_pos: Vector2, target_positions: Array,
 				new_target_positions.append(target_pos)
 	return(new_target_positions)
 
+func check_cursor(target_positions: Array, mouse_pos: Vector2):
+	"""
+	checks if current mouse position is in the shown spell range and
+	changes cursor color to match validity of action
+	"""
+	
+	var target_pos_loc = target_positions.map(func(x): return tilemap.local_to_map(x))
+	
+	if target_pos_loc.has(tilemap.local_to_map(mouse_pos)):
+		for child in cursor.get_children():
+			child.modulate = Color.GREEN
+	else:
+		for child in cursor.get_children():
+			child.modulate = Color.RED
+	
+	if target_positions.is_empty():
+		for child in cursor.get_children():
+			child.modulate = Color.DARK_BLUE
+	
