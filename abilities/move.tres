@@ -15,6 +15,7 @@ ability_name = "move"
 ability_type = "player_movement"
 ability_damage = 0.0
 ability_range = 4
+range_type = "Free"
 cooldown = 0.0
 name = "move"
 description = ""

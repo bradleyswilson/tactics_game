@@ -3,10 +3,10 @@ extends Control
 @onready var portrait = $MarginContainer/ColorRect/Portrait
 @onready var progress_bar = $MarginContainer/HealthBar/ProgressBar
 
-var entity: Entity
 # Called when the node enters the scene tree for the first time.
-func _ready():
-	set_entity_info(entity)
+#func _ready():
+	#var entity: Entity
+	#set_entity_info(entity)
 
 func set_entity_info(entity: Entity):
 	if entity:

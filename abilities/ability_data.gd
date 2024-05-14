@@ -5,6 +5,7 @@ class_name AbilityData
 @export var ability_type: String = ""
 @export var ability_damage: float = 0.0
 @export var ability_range: int
+@export var range_type: String = ""
 @export var cooldown : float
 
 func _try_damage(ability_data: AbilityData, target: Entity):
@@ -18,5 +19,10 @@ func _damage(ability_data: AbilityData, target: Entity):
 	if target:
 		target.health -= ability_data.ability_damage
 		Globals.stat_change.emit()
-		#print(target.health)
+	
+		if target.health <= target.MIN_HP:
+			StatusEffects.on_entity_death.emit(target)
+	#print(target.health)
 
+func _mine(ability_data: AbilityData, target: CellData):
+	UiBattle.inventory_interface.set_resource_inventory(target)

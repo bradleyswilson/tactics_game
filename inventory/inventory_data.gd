@@ -54,6 +54,7 @@ func drop_single_slot_data(grabbed_slot_data: SlotData, index: int) -> SlotData:
 		
 func on_slot_clicked(index: int, button: int) -> void:
 	inventory_interact.emit(self, index, button)
+	print('clicked')
 	
 func on_ability_used(index: int) -> void:
 	ability_used.emit(self, index)

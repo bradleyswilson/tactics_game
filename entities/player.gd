@@ -10,17 +10,20 @@ signal toggle_inventory()
 	
 func _ready():
 	health = 100
-	#move_data.ability_range = 5
-	#Globals.player_pos = global_position # set original play pos
+	speed = 100
+	#ap = 10
+	StatusEffects.on_entity_death.connect(_on_entity_death)
+	cd_array.resize(len(action_bar_data.slot_datas))
+	cd_array.fill(0)
+
 	
+func _on_entity_death(entity: Entity):
+	if entity == self:
+		super._on_entity_death(entity)
+		
 func _unhandled_input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("toggle_inventory"):
 		toggle_inventory.emit()
 		
-	if Input.is_action_just_pressed("interact"):
-		interact()
-
-func interact() -> void:
-	if interact_ray.is_colliding():
-		interact_ray.get_collider().player_interact()
-	
+	#if Input.is_action_just_pressed("interact"):
+		#interact()
