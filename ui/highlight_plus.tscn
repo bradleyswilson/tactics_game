@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://brjtfcpyt4uwq"]
+
+[ext_resource type="Script" path="res://ui/highlight_square.gd" id="1_hrnkx"]
+[ext_resource type="Texture2D" uid="uid://c7wk0c0upy4i3" path="res://assets/plus_cursor.aseprite" id="2_jpl37"]
+
+[node name="HighlightPlus" type="Area2D"]
+script = ExtResource("1_hrnkx")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("2_jpl37")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(0, -5, 13, 1, 0, 7, -13, 1)
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

@@ -2,6 +2,8 @@ extends Node2D
 
 @onready var abilities = $Abilities
 @onready var Square = preload("res://ui/highlight_square.tscn")
+@onready var Plus = preload("res://ui/highlight_plus.tscn")
+
 @onready var cursor = $Cursor
 @onready var cursor_visible = false
 @onready var shown_positions: Array
@@ -21,25 +23,17 @@ func show_range(ability_data: AbilityData, source_loc: Vector2, collisions: bool
 	var ability_range = ability_data.ability_range
 	for n in abilities.get_children():
 		n.queue_free()
-	for n in cursor.get_children():
-		n.queue_free()
 	
 	match [ability_data.range_type]:
 		["Free"]:
 			indicator_positions = get_range_squares(ability_range, source_loc, collisions)
-			cursor_visible = false
+			cursor.swap_cursor("square")
 		["Line"]:
 			indicator_positions = get_plus_squares(ability_range, source_loc, collisions)
-			cursor_visible = false
+			cursor.swap_cursor("square")
 		["Cluster"]:
 			indicator_positions = get_range_squares(ability_range, source_loc, collisions)	
-			cursor.cursor_range = 1
-			if cursor_visible == false:
-				cursor.add_cursors(5)
-				cursor_visible = true
-			else:
-				cursor.remove_cursors()
-				cursor_visible = false
+			cursor.swap_cursor("plus")
 	
 	for ind in indicator_positions:
 		var square = Square.instantiate()
@@ -53,12 +47,15 @@ func show_range(ability_data: AbilityData, source_loc: Vector2, collisions: bool
 		for n in abilities.get_children():
 			n.queue_free()
 		shown_positions = []
-
+	print(abilities.visible)
+	
 func clear_range():
 	# clear range indicators, used on a fresh turn.
 	for n in abilities.get_children():
 		n.queue_free()
-	abilities.hide()
+	cursor.swap_cursor("square")
+	abilities.visible = false
+	get_parent().toggle_count = 0
 		
 func get_range_squares(movement_range: int, source_loc: Vector2, collisions: bool):
 	var move_options: Array = []

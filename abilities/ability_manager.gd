@@ -70,7 +70,6 @@ func _on_ability_confirm(casting_ability: AbilityData) -> void:
 			range_highlight.visible = not range_highlight.visible
 			
 			# reset cursor
-			highlight_interface.cursor.remove_cursors()
 			highlight_interface.shown_positions = []
 			
 		match [casting_ability.ability_type]:
