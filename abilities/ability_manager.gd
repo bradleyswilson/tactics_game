@@ -13,11 +13,12 @@ var selected_terrain: CellData
 var last_clicked: AbilityData
 var toggle_count = 0
 
+
 signal ability_confirm()
 
 	
 func _input(event):
-	if event.is_action_released("confirm_click"):
+	if event.is_action_released("confirm_click") and not Globals.turn_entity.ending_turn:
 		selected_body = Globals.hover_entity
 		selected_terrain = Globals.hover_terrain
 		_on_ability_confirm(current_cast)
@@ -66,21 +67,23 @@ func _on_ability_confirm(casting_ability: AbilityData) -> void:
 	toggle_count = 0 
 	if casting_ability:
 		if tilemap.is_target_valid(casting_ability, Globals.turn_entity.global_position, get_global_mouse_position()):
+			print("yes")
 			# remove range indicators
 			range_highlight.visible = not range_highlight.visible
 			
 			# reset cursor
 			highlight_interface.shown_positions = []
 			
-		match [casting_ability.ability_type]:
-			["player_movement"]:
-				Globals.turn_entity.ap -= 1
-			[_]:
-				ability_execute(casting_ability, tilemap.selected_tile_loc)
-				Globals.turn_entity.ap = 0		
+			match [casting_ability.ability_type]:
+				["player_movement"]:
+					Globals.turn_entity.ap -= 1
+				[_]:
+					ability_execute(casting_ability, tilemap.selected_tile_loc)
+					Globals.turn_entity.ap = 0		
 				
 var spell_test = preload('res://ui/highlight_square.tscn')
 func ability_execute(casted_ability: AbilityData, cast_location: Vector2):
+	print("execute")
 	if Globals.turn_entity.ap > 0:
 		update_cooldown_display(casted_ability)
 	

@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://b5nph7ryuc3rc"]
+[gd_scene load_steps=10 format=3 uid="uid://b5nph7ryuc3rc"]
 
 [ext_resource type="Script" path="res://entities/player.gd" id="1_i8kge"]
 [ext_resource type="Shader" path="res://entities/player.gdshader" id="1_nxmaf"]
 [ext_resource type="Resource" uid="uid://basmht2gja474" path="res://inventory/test_inv.tres" id="2_kigkk"]
 [ext_resource type="Resource" uid="uid://de5lmqmeax2t7" path="res://actionbar/test_actionbar.tres" id="2_phm58"]
 [ext_resource type="Texture2D" uid="uid://biuu22dgoufbv" path="res://assets/iso_diver_front.aseprite" id="5_0oki1"]
+[ext_resource type="Texture2D" uid="uid://dwmcbropv6b47" path="res://assets/direction_cursor.aseprite" id="6_k0jny"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_eyihn"]
 resource_local_to_scene = true
@@ -33,6 +34,7 @@ z_index = 1
 y_sort_enabled = true
 motion_mode = 1
 script = ExtResource("1_i8kge")
+speed = 700
 inventory_data = ExtResource("2_kigkk")
 action_bar_data = ExtResource("2_phm58")
 
@@ -59,3 +61,7 @@ one_way_collision_margin = 0.0
 target_position = Vector2(17, 0)
 collision_mask = 4
 collide_with_areas = true
+
+[node name="DirectionIndicator" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("6_k0jny")

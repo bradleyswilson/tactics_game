@@ -48,5 +48,3 @@ func _input(event):
 		_update()
 		UiBattle.show()
 		
-
-

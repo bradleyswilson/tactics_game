@@ -23,6 +23,7 @@ func _enter_state() -> void:
 	if turn_entity is PlayableEntity:
 		UiBattle.action_bar.set_player_ability_data(turn_entity.action_bar_data, turn_entity.cd_array)
 		turn_entity.action_bar_data.ability_used.connect(on_ability_used)
+		turn_entity.endturn_direction.connect(_on_endturn_direction)
 	
 	elif turn_entity is Enemy:
 		turn_entity.get_available_actions()
@@ -33,18 +34,33 @@ func _exit_state():
 	turn_entity.ap = 2
 	if turn_entity is PlayableEntity:
 		turn_entity.action_bar_data.ability_used.disconnect(on_ability_used)
+		turn_entity.direction_indicator.hide()
+		turn_entity.endturn_direction.disconnect(_on_endturn_direction)
+		
+		#var click_position = get_global_mouse_position()
+		#turn_entity.face_direction(click_position)
 
 func _input(event):
 	if event.is_action_pressed("interact"):
-		state_finished.emit()
+		if turn_entity is PlayableEntity:
+			turn_entity.turnable = true
+			turn_entity.ending_turn = true
+			turn_entity.direction_indicator.show()
+			turn_entity.set_process(true)
+		else:
+			state_finished.emit()
+	
+func _on_endturn_direction():
+	state_finished.emit()
 
 func on_ability_used(ability_datas: InventoryData, index: int) -> void:
 	grabbed_ability = ability_datas.grab_ability_data(index)
 	ability_data = grabbed_ability.item_data
 	var is_valid_cast = true if turn_entity.cd_array[index] == 0 else false
-
-	match [ability_data.ability_type]:
-		[_]:
-			ability_used.emit(ability_data, is_valid_cast)
-			Globals.spell_ind = index
-
+	
+	Globals.spell_ind = index
+	if is_valid_cast:
+		ability_used.emit(ability_data, is_valid_cast)
+		turn_entity.turnable = true
+		turn_entity.turnable = true
+		turn_entity.set_process(true)
