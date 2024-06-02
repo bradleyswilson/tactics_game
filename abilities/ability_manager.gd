@@ -30,6 +30,9 @@ func _input(event):
 			highlight_interface.cursor.swap_cursor("square")
 			
 func ai_available_actions(turn_entity: Entity):
+	"""
+	Enemy AI - gets move candidates and prefers max damage right now
+	"""
 	var move_candidates: Array
 	var self_pos = turn_entity.global_position # easier to use
 	
@@ -69,6 +72,9 @@ func ai_available_actions(turn_entity: Entity):
 		tilemap.is_target_valid(move_data, self_pos, selected_move)
 #
 func check_option(cast_loc: Vector2, casted_ability: AbilityData):
+	"""
+	Tests damage for AI 
+	"""
 	var damage: int
 	var damage_entity: Entity
 	for entity in Globals.turn_queue:

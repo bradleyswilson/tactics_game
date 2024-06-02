@@ -48,7 +48,6 @@ func show_range(ability_data: AbilityData, source_loc: Vector2, collisions: bool
 			n.queue_free()
 		shown_positions = []
 
-	
 func clear_range():
 	# clear range indicators, used on a fresh turn.
 	for n in abilities.get_children():
