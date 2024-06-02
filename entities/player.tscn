@@ -31,6 +31,7 @@ height = 10.0
 
 [node name="Player" type="CharacterBody2D"]
 z_index = 1
+z_as_relative = false
 y_sort_enabled = true
 motion_mode = 1
 script = ExtResource("1_i8kge")

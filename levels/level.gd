@@ -1,6 +1,9 @@
 extends Node2D
 class_name LevelParent
 
+
+@export var turn_count: int
+
 @onready var party_member = preload("res://entities/player.tscn")
 @onready var enemy = preload("res://entities/enemy.tscn")
 

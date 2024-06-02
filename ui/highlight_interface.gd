@@ -47,7 +47,7 @@ func show_range(ability_data: AbilityData, source_loc: Vector2, collisions: bool
 		for n in abilities.get_children():
 			n.queue_free()
 		shown_positions = []
-	print(abilities.visible)
+
 	
 func clear_range():
 	# clear range indicators, used on a fresh turn.
@@ -92,7 +92,8 @@ func get_plus_squares(movement_range: int, source_loc: Vector2, collisions: bool
 	
 func check_path(source_pos: Vector2, target_positions: Array, 
 				movement_range: int, collisions: bool):
-	var invalid_cells = tilemap.cell_local_pos
+	var invalid_cells = []
+	invalid_cells.append_array(tilemap.cell_local_pos)
 	var new_target_positions: Array = []
 	for target_pos in target_positions:
 		if tilemap.get_cell_tile_data(0, tilemap.local_to_map(target_pos)) != null:
@@ -102,10 +103,12 @@ func check_path(source_pos: Vector2, target_positions: Array,
 					).slice(1)
 			if collisions:
 				invalid_cells.append_array(Globals.entities_pos)
+				# need to update these each turn?
 				if len(path) <= movement_range and not invalid_cells.has(target_pos):
 					new_target_positions.append(target_pos)
 			else:
 				new_target_positions.append(target_pos)
+
 	return(new_target_positions)
 
 func check_cursor(target_positions: Array, mouse_pos: Vector2):

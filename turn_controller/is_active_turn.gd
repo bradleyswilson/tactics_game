@@ -6,6 +6,7 @@ var grabbed_ability: SlotData
 var ability_data: ItemData
 
 signal ability_used(ability_data: AbilityData, is_valid_cast: bool)
+signal get_available_actions(turn_entity: Entity)
 
 func _ready():
 	pass
@@ -26,7 +27,7 @@ func _enter_state() -> void:
 		turn_entity.endturn_direction.connect(_on_endturn_direction)
 	
 	elif turn_entity is Enemy:
-		turn_entity.get_available_actions()
+		get_available_actions.emit(turn_entity)
 
 func _exit_state():
 	Globals.end_turn.emit()

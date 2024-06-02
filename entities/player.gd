@@ -19,7 +19,7 @@ func _ready():
 	ending_turn = false
 	health = 100
 	speed = 600
-	#ap = 10
+	ap = 10
 	StatusEffects.on_entity_death.connect(_on_entity_death)
 	cd_array.resize(len(action_bar_data.slot_datas))
 	cd_array.fill(0)

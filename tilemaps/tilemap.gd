@@ -22,7 +22,7 @@ const main_source = 0
 var cells = get_used_cells(layers.level1)
 
 func _use_tile_data_runtime_update(layer: int, _coords: Vector2i) -> bool:
-	return layer in [0]
+	return layer in [0, 1]
 	
 func _tile_data_runtime_update(_layer: int, _coords: Vector2i, tile_data: TileData) -> void:
 	tile_data.set_collision_polygons_count(0, 0)
@@ -47,64 +47,19 @@ func set_cell_data():
 		cell_local_pos.append(map_to_local(cell + Vector2i(1,1)))
 
 	Globals.gridData[Vector2i(15,0)] = load("res://tilemaps/brain_coral.tres")
-
-
+	
 func on_start_turn():
+	# makes terrain un-navigateable 
+	for cell in cells:
+		astar_grid.set_point_solid(cell + Vector2i(1,1) + iso_offset)
+		
 	# makes entities un-navigateable 
 	for entity in Globals.turn_queue:
 		astar_grid.set_point_solid(local_to_map(entity.global_position) + iso_offset)
 
 func on_end_turn():
-	# clear solids to rest on a new grid
+	# clear solids to rest on a new grid (clears everything, so reset on start turn)
 	astar_grid.fill_solid_region(astar_grid.region, false)
-
-#TODO clean up movement
-func get_enemy_moves(shape_tiles: Array, ability_data: AbilityData):
-	var offset_x = Vector2(-32,-16)
-	var offset_y = Vector2(32, -16)
-	
-	var movement_range = ability_data.ability_range
-	var move_options: Array[Vector2] = []
-	var final_position
-	var pos_key
-	var added_positions = {}  # Use a dictionary to track added positions to avoid duplicates
-	
-	var shape_tiles_map = map_coords_oversized_entity(shape_tiles)
-	
-	for tile in shape_tiles_map:
-		for dx in range(-movement_range, movement_range + 1):
-			for dy in range(-movement_range, movement_range + 1):
-				if abs(dx) + abs(dy) <= movement_range:
-					# Position each square using isometric offset calculations
-					var pos_x = dx * offset_x.x * 0.5  + dy * offset_y.x * 0.5
-					var pos_y = dx * offset_x.y * 0.5  + dy * offset_y.y * 0.5
-					final_position = tile + Vector2(pos_x, pos_y)
-					
-					# Convert position to a unique key to avoid duplicates
-					pos_key = str(final_position.x) + "," + str(final_position.y)
-					if pos_key not in added_positions:
-						if footprint_is_oob(final_position, shape_tiles):
-							#var square = Square.instantiate()
-							#add_child(square)
-							move_options.append(final_position)
-							added_positions[pos_key] = true
-							#square.global_position = final_position
-	
-	return(move_options)
-	
-func footprint_is_oob(fposition: Vector2, shape_tiles: Array) -> bool:
-	var shape_tiles_bool = shape_tiles.all( \
-		func(cell): return get_cell_tile_data(0, local_to_map(fposition) + cell)!=null)
-	return(shape_tiles_bool)
-	
-func map_coords_oversized_entity(shape_tiles: Array): 
-	# returns map coordinates of an entity that's oversized
-	var shape_tiles_loc: Array[Vector2] = []
-	for tile in shape_tiles:
-		var tile_pos_loc = local_to_map(Globals.turn_entity_pos) + tile
-		shape_tiles_loc.append(map_to_local(tile_pos_loc))
-	return(shape_tiles_loc)
-
 				
 func is_target_valid(ability_data: AbilityData, pos: Vector2, target_pos: Vector2) -> bool:
 	# This should be clean, if the target is off the map just immediately break
