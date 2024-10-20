@@ -20,6 +20,8 @@ const brain_coral_pos = Vector2i(2, 0)
 const main_source = 0
 
 var cells = get_used_cells(layers.level1)
+var ground_cells = get_used_cells(layers.level0)
+var empty_cell_pos := []
 
 func _use_tile_data_runtime_update(layer: int, _coords: Vector2i) -> bool:
 	return layer in [0, 1]
@@ -40,6 +42,15 @@ func _ready():
 	
 	for cell in cells:
 		astar_grid.set_point_solid(cell + Vector2i(1,1) + iso_offset)
+		
+	var cells = get_used_cells(layers.level1)
+	
+	# get empty cells (not sure why these are empty)
+	for y in get_used_rect().size.y:
+		for x in get_used_rect().size.x:
+			var cell_pos = get_used_rect().position + Vector2i(x, y)
+			if not ground_cells.has(cell_pos):
+				empty_cell_pos.append(cell_pos)
 
 func set_cell_data():
 	for cell in cells:
@@ -56,6 +67,10 @@ func on_start_turn():
 	# makes entities un-navigateable 
 	for entity in Globals.turn_queue:
 		astar_grid.set_point_solid(local_to_map(entity.global_position) + iso_offset)
+	
+	# make empty cells un-navigateable
+	for cell in empty_cell_pos:
+		astar_grid.set_point_solid(cell + iso_offset)
 
 func on_end_turn():
 	# clear solids to rest on a new grid (clears everything, so reset on start turn)

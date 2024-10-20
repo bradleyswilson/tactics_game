@@ -17,8 +17,8 @@ func _ready():
 	restart.pressed.connect(on_restart)
 	Globals.level_over.connect(on_level_over)
 
-	player.toggle_inventory.connect(toggle_inventory_interface)
-	inventory_interface.set_player_inventory_data(player.inventory_data)
+#	player.toggle_inventory.connect(toggle_inventory_interface)
+#	inventory_interface.set_player_inventory_data(player.inventory_data)
 	
 	for node in get_tree().get_nodes_in_group("external_inventory"):
 		node.toggle_inventory.connect(toggle_inventory_interface)

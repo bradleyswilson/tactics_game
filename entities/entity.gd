@@ -4,7 +4,7 @@ class_name Entity
 @export var speed = 300
 #@export var move_data: AbilityData
 @export var inventory_data: InventoryData
-@export var action_bar_data: InventoryData
+@export var action_bar_data: InventoryData 
 @export var health = 100
 @export var texture = Texture2D
 @export var cd_array = []

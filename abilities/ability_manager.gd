@@ -137,9 +137,11 @@ func _on_ability_confirm(casting_ability: AbilityData) -> void:
 			match [casting_ability.ability_type]:
 				["player_movement"]:
 					Globals.turn_entity.ap -= 1
+					current_cast = null
 				[_]:
 					ability_execute(casting_ability, tilemap.selected_tile_loc)
 					Globals.turn_entity.ap = 0		
+					highlight_interface.cursor.swap_cursor("square")
 				
 var spell_test = preload('res://ui/highlight_square.tscn')
 func ability_execute(casted_ability: AbilityData, cast_location: Vector2):

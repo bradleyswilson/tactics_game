@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://cl4hyn61e4rxc"]
+
+[ext_resource type="Texture2D" uid="uid://bhx5mwkm5phdb" path="res://assets/landing_pod.aseprite" id="1_w1r8e"]
+
+[node name="Sub" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -26)
+texture = ExtResource("1_w1r8e")

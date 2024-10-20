@@ -43,10 +43,10 @@ func swap_cursor(cursor_type):
 		
 func on_body_entered(body):
 	temp_body = body
-	if temp_body is Enemy:
+	if temp_body is Entity:
 		Globals.hover_entity = temp_body
-		Globals.toggle_enemy_details.emit(Globals.hover_entity)
-	if temp_body is TileMap:
+		Globals.toggle_entity_details.emit(Globals.hover_entity)
+	elif temp_body is TileMap:
 		var cell = tilemap.local_to_map(tilemap.get_global_mouse_position()) - Vector2i(1,1)
 		if cell in Globals.gridData:
 			Globals.hover_terrain = Globals.gridData[cell]
@@ -55,10 +55,10 @@ func on_body_entered(body):
 func on_body_exited(body):
 	if temp_body == body:
 		temp_body = null
-		if Globals.hover_entity is Enemy:
-			Globals.toggle_enemy_details.emit(Globals.hover_entity)
+		if Globals.hover_entity is Entity:
+			Globals.toggle_entity_details.emit(Globals.hover_entity)
 			Globals.hover_entity = null
-		if Globals.hover_terrain is CellData:
+		elif Globals.hover_terrain is CellData:
 			Globals.hover_terrain = null
 			Globals.toggle_terrain_details.emit(Globals.hover_terrain)
 			

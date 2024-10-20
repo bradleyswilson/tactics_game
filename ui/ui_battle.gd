@@ -2,7 +2,7 @@ extends CanvasLayer
 
 @onready var inventory_interface = $InventoryInterface
 @onready var action_bar = $PlayerStats/ActionBar
-@onready var entity_info_container = $EntityInfoContainer
+@onready var entity_info_container = $HighlightCellDisplay/EntityInfoContainer
 @onready var turn_order_display = $TurnOrderDisplay
 @onready var cid_texture_rect = $CellInfoDisplay/TextureRect
 
@@ -13,7 +13,7 @@ func _ready():
 	hide()
 	Globals.new_level.connect(on_new_level)
 	Globals.stat_change.connect(update_entity_info)
-	Globals.toggle_enemy_details.connect(_toggle_enemy_details)
+	Globals.toggle_entity_details.connect(_toggle_entity_details)
 	Globals.toggle_terrain_details.connect(_toggle_terrain_details)
 		
 func battle_start():
@@ -25,11 +25,11 @@ func _toggle_terrain_details(cell_data: CellData):
 	else:
 		cid_texture_rect.texture = null
 		
-func _toggle_enemy_details(enemy: Enemy):
-	if enemy:
+func _toggle_entity_details(entity: Entity):
+	if entity:
 		var entity_info = ENTITY_INFO.instantiate()
 		entity_info_container.add_child(entity_info)
-		entity_info.set_entity_info(enemy)
+		entity_info.set_entity_info(entity)
 		entity_info_container.visible = not entity_info_container.visible
 
 	# if not visible, clear the data
@@ -46,3 +46,7 @@ func on_new_level():
 	print("new_level")
 	for n in entity_info_container.get_children():
 			n.queue_free()
+
+
+func _on_button_pressed():
+	Globals.player_clicked_end_turn.emit()

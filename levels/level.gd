@@ -1,15 +1,16 @@
 extends Node2D
 class_name LevelParent
 
-
 @export var turn_count: int
+@export var level_turns: int
 
 @onready var party_member = preload("res://entities/player.tscn")
 @onready var enemy = preload("res://entities/enemy.tscn")
 
-@onready var party = $Party
-@onready var enemies = $Enemies
-@onready var tilemap = $Tilemap
+@onready var party = $GameState/Party
+@onready var enemies = $GameState/Enemies
+@onready var turn_dummy = $GameState/TurnDummy
+@onready var tilemap = $GameState/Tilemap
 
 @onready var active_entities: Array
 @onready var turn_manager = $GameState/TurnManager
@@ -18,14 +19,13 @@ var selected_body
 var temp_body
 var casting_ability: AbilityData
 
-
 func _ready():
 	start_battle()
-	active_entities += $Party.get_children()
-	active_entities += $Enemies.get_children()
-	#TODO sort by initiative?
-
+	active_entities += party.get_children()
+	active_entities += enemies.get_children()
+	level_turns = 5
 	
+	#TODO sort by initiative?
 func start_battle():
 	var char1 = party_member.instantiate()
 	var char2 = party_member.instantiate()
@@ -43,6 +43,7 @@ func start_battle():
 	
 func _update():
 	Globals.turn_queue.assign(active_entities)
+	Globals.turn_queue.append(turn_dummy)
 	turn_manager.start_turn(active_entities[0])
 	UiBattle.battle_start()
 

@@ -6,9 +6,11 @@ var grabbed_ability: SlotData
 var ability_data: ItemData
 
 signal ability_used(ability_data: AbilityData, is_valid_cast: bool)
-signal get_available_actions(turn_entity: Entity)
+signal get_available_actions(Entity)
+signal spawn()
 
 func _ready():
+	Globals.player_clicked_end_turn.connect(_on_player_endturn)
 	pass
 	#set_process(false)
 	
@@ -37,9 +39,10 @@ func _exit_state():
 		turn_entity.action_bar_data.ability_used.disconnect(on_ability_used)
 		turn_entity.direction_indicator.hide()
 		turn_entity.endturn_direction.disconnect(_on_endturn_direction)
-		
+	
 		#var click_position = get_global_mouse_position()
 		#turn_entity.face_direction(click_position)
+	
 
 func _input(event):
 	if event.is_action_pressed("interact"):
@@ -50,6 +53,15 @@ func _input(event):
 			turn_entity.set_process(true)
 		else:
 			state_finished.emit()
+
+func _on_player_endturn():
+	if turn_entity is PlayableEntity:
+		turn_entity.turnable = true
+		turn_entity.ending_turn = true
+		turn_entity.direction_indicator.show()
+		turn_entity.set_process(true)
+	else:
+		state_finished.emit()
 	
 func _on_endturn_direction():
 	state_finished.emit()

@@ -5,12 +5,15 @@ signal stat_change
 signal get_enemy_moves(Vector2)
 signal return_enemy_moves(Array)
 signal start_turn()
+signal player_clicked_end_turn()
 signal end_turn()
 signal new_level()
 signal level_over(type: String)
 
+signal spawn()
+
 ## Highlight interface - cursor
-signal toggle_enemy_details(Entity)
+signal toggle_entity_details(Entity)
 signal toggle_terrain_details(CellData)
 
 

@@ -14,7 +14,7 @@ func populate_turn_display(turn_queue: Array[Entity]) -> void:
 	for child in h_box_container.get_children():
 		child.queue_free()
 	
-	for entity in turn_queue:
+	for entity in turn_queue.slice(0,4):
 		if entity:
 			var entity_info = ENTITY_INFO.instantiate()
 			h_box_container.add_child(entity_info)
@@ -24,7 +24,11 @@ func update_turn_display():
 	for child in h_box_container.get_children():
 		child.queue_free()
 		
-	for entity in Globals.turn_queue:
+	# not sure this is needed
+	if Globals.turn_queue.size() == 0:
+		return
+		
+	for entity in Globals.turn_queue.slice(0,4):
 		if entity:
 			var entity_info = ENTITY_INFO.instantiate()
 			h_box_container.add_child(entity_info)

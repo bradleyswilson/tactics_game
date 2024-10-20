@@ -1,8 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://4g07xnpwmo8j"]
+[gd_scene load_steps=9 format=3 uid="uid://4g07xnpwmo8j"]
 
 [ext_resource type="Script" path="res://levels/level.gd" id="1_nrfdk"]
 [ext_resource type="PackedScene" uid="uid://dvgrs2m7skky1" path="res://tilemaps/tilemap.tscn" id="2_qa0yh"]
+[ext_resource type="Script" path="res://entities/entity.gd" id="3_qqkk3"]
 [ext_resource type="Script" path="res://levels/game_state.gd" id="3_wmbld"]
+[ext_resource type="Script" path="res://turn_controller/enemy_spawner.gd" id="6_pfs68"]
 [ext_resource type="PackedScene" uid="uid://c8uecxd8s3h06" path="res://abilities/ability_manager.tscn" id="6_rsd7o"]
 [ext_resource type="Script" path="res://turn_controller/turn_controller.gd" id="7_8cf6q"]
 [ext_resource type="Script" path="res://turn_controller/is_active_turn.gd" id="8_jos0q"]
@@ -12,31 +14,52 @@ z_as_relative = false
 y_sort_enabled = true
 script = ExtResource("1_nrfdk")
 
-[node name="Tilemap" parent="." instance=ExtResource("2_qa0yh")]
+[node name="Background" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="ColorRect" type="ColorRect" parent="Background"]
+show_behind_parent = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.196078, 0.196078, 0.196078, 1)
+
+[node name="GameState" type="Node2D" parent="."]
+z_as_relative = false
+y_sort_enabled = true
+script = ExtResource("3_wmbld")
+
+[node name="Party" type="Node2D" parent="GameState"]
+z_index = 1
+z_as_relative = false
+y_sort_enabled = true
+
+[node name="Enemies" type="Node2D" parent="GameState"]
+z_index = 1
+z_as_relative = false
+y_sort_enabled = true
+
+[node name="TurnDummy" type="CharacterBody2D" parent="GameState"]
+script = ExtResource("3_qqkk3")
+
+[node name="Tilemap" parent="GameState" instance=ExtResource("2_qa0yh")]
+z_as_relative = false
 y_sort_enabled = true
 collision_visibility_mode = 0
 layer_0/name = "layer 0"
 layer_1/name = "layer 1"
-layer_1/navigation_enabled = false
-
-[node name="Party" type="Node2D" parent="."]
-z_index = 1
-z_as_relative = false
-y_sort_enabled = true
-
-[node name="Enemies" type="Node2D" parent="."]
-z_index = 1
-z_as_relative = false
-y_sort_enabled = true
-
-[node name="GameState" type="Node" parent="."]
-script = ExtResource("3_wmbld")
 
 [node name="TurnManager" type="Node" parent="GameState"]
 script = ExtResource("7_8cf6q")
 
 [node name="ActiveTurn" type="Node" parent="GameState/TurnManager"]
 script = ExtResource("8_jos0q")
+
+[node name="EnemySpawner" type="Node" parent="GameState/TurnManager"]
+script = ExtResource("6_pfs68")
 
 [node name="AbilityManager" parent="GameState" instance=ExtResource("6_rsd7o")]
 
