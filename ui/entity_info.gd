@@ -13,3 +13,4 @@ func set_entity_info(entity: Entity):
 		portrait.texture = entity.get_child(0).texture
 		progress_bar.value = entity.health
 	
+	

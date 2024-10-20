@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://levels/level.gd" id="1_nrfdk"]
 [ext_resource type="PackedScene" uid="uid://dvgrs2m7skky1" path="res://tilemaps/tilemap.tscn" id="2_qa0yh"]
-[ext_resource type="Script" path="res://entities/entity.gd" id="3_qqkk3"]
+[ext_resource type="Script" path="res://entities/turndummy.gd" id="3_b0nh0"]
 [ext_resource type="Script" path="res://levels/game_state.gd" id="3_wmbld"]
 [ext_resource type="Script" path="res://turn_controller/enemy_spawner.gd" id="6_pfs68"]
 [ext_resource type="PackedScene" uid="uid://c8uecxd8s3h06" path="res://abilities/ability_manager.tscn" id="6_rsd7o"]
@@ -43,7 +43,7 @@ z_as_relative = false
 y_sort_enabled = true
 
 [node name="TurnDummy" type="CharacterBody2D" parent="GameState"]
-script = ExtResource("3_qqkk3")
+script = ExtResource("3_b0nh0")
 
 [node name="Tilemap" parent="GameState" instance=ExtResource("2_qa0yh")]
 z_as_relative = false

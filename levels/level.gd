@@ -46,6 +46,7 @@ func _update():
 	Globals.turn_queue.append(turn_dummy)
 	turn_manager.start_turn(active_entities[0])
 	UiBattle.battle_start()
+	print(Globals.turn_queue)
 
 func _input(event):
 	if event.is_action_pressed('start_battle'):

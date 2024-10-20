@@ -26,5 +26,8 @@ func start_turn(turn_entity: Entity):
 	turn._enter_state()
 
 func check_board_state():
+	if turn_queue[0] is TurnDummy:
+		on_state_change()
+	
 	if Globals.turn_queue.size() <= 4:
 		Globals.spawn.emit()
