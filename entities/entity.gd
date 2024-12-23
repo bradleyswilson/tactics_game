@@ -10,6 +10,7 @@ class_name Entity
 @export var cd_array = []
 @export var ap = 2
 @export var ending_turn = false
+@export var can_act = true
 
 const MIN_HP: int = 0
 

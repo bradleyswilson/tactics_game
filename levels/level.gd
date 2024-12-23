@@ -42,7 +42,7 @@ func start_battle():
 	
 func _update():
 	Globals.turn_queue.assign(active_entities)
-	turn_manager.character_action(active_entities[0])
+	turn_manager.start_turn(true)
 	UiBattle.battle_start()
 	
 

@@ -10,8 +10,8 @@ signal get_available_actions(Entity)
 signal spawn()
 
 func _ready():
+	set_process_input(true) 
 	pass
-	#set_process(false)
 	
 func set_action_entity(entity: Entity) -> void:
 	action_entity = entity
@@ -30,28 +30,21 @@ func _enter_state() -> void:
 		get_available_actions.emit(action_entity)
 
 func _exit_state():
-	Globals.end_turn.emit()
+	#Globals.end_turn.emit()
 	action_entity.toggle_outline(false)
 	action_entity.ap = 2
+	action_entity.can_act = false
 	if action_entity is PlayableEntity:
 		action_entity.action_bar_data.ability_used.disconnect(on_ability_used)
 		action_entity.direction_indicator.hide()
 		action_entity.endturn_direction.disconnect(_on_endturn_direction)
 	
+	#state_finished.emit()
 		#var click_position = get_global_mouse_position()
 		#action_entity.face_direction(click_position)
 
-func _input(event):
-	if event.is_action_pressed("interact"):
-		if action_entity is PlayableEntity:
-			action_entity.turnable = true
-			action_entity.ending_turn = true
-			action_entity.direction_indicator.show()
-			action_entity.set_process(true)
-		else:
-			state_finished.emit()
 
-func _on_player_endturn():
+func end_action_rotation():
 	if action_entity is PlayableEntity:
 		action_entity.turnable = true
 		action_entity.ending_turn = true
@@ -73,3 +66,5 @@ func on_ability_used(ability_datas: InventoryData, index: int) -> void:
 		ability_used.emit(ability_data, is_valid_cast)
 		action_entity.turnable = true
 		action_entity.set_process(true)
+
+
