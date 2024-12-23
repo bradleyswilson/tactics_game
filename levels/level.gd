@@ -9,7 +9,6 @@ class_name LevelParent
 
 @onready var party = $GameState/Party
 @onready var enemies = $GameState/Enemies
-@onready var turn_dummy = $GameState/TurnDummy
 @onready var tilemap = $GameState/Tilemap
 
 @onready var active_entities: Array
@@ -43,10 +42,9 @@ func start_battle():
 	
 func _update():
 	Globals.turn_queue.assign(active_entities)
-	Globals.turn_queue.append(turn_dummy)
-	turn_manager.start_turn(active_entities[0])
+	turn_manager.character_action(active_entities[0])
 	UiBattle.battle_start()
-	print(Globals.turn_queue)
+	
 
 func _input(event):
 	if event.is_action_pressed('start_battle'):

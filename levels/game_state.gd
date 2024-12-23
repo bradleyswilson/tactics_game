@@ -2,7 +2,8 @@ extends Node
 
 
 @onready var turn_manager = $TurnManager
-@onready var active_turn = $TurnManager/ActiveTurn
+@onready var turn = $TurnManager/Turn
+
 @onready var ability_manager = $AbilityManager
 @onready var highlight_interface = $AbilityManager/HighlightInterface
 @onready var enemy_spawner = $TurnManager/EnemySpawner
@@ -15,8 +16,8 @@ const ENEMY = preload("res://entities/enemy.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	active_turn.ability_used.connect(ability_manager.ability_eval)
-	active_turn.get_available_actions.connect(ability_manager.ai_available_actions)
+	turn.character_action.ability_used.connect(ability_manager.ability_eval)
+	turn.character_action.get_available_actions.connect(ability_manager.ai_available_actions)
 	Globals.start_turn.connect(on_start_turn)
 	Globals.spawn.connect(on_spawn)
 	
