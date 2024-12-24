@@ -34,7 +34,9 @@ func start_battle():
 	party.get_children()[1].global_position = tilemap.map_to_local(Vector2i(12,4))
 	
 	var enemy1 = enemy.instantiate()
+	enemy1.name = "Enemy_" + str(1)  # or however you want to name it
 	var enemy2 = enemy.instantiate()
+	enemy2.name = "Enemy_" + str(2)  # or however you want to name it
 	enemies.add_child(enemy1)
 	enemies.add_child(enemy2)
 	enemies.get_children()[0].global_position = tilemap.map_to_local(Vector2i(11,-3)) 
@@ -42,7 +44,10 @@ func start_battle():
 	
 func _update():
 	Globals.turn_queue.assign(active_entities)
+	Globals.party.assign(party.get_children())
+	Globals.enemies.assign(enemies.get_children())
 	turn_manager.start_turn(true)
+	Globals.start_action.emit() # need to trigger first action?
 	UiBattle.battle_start()
 	
 

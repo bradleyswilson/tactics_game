@@ -18,14 +18,14 @@ const ENEMY = preload("res://entities/enemy.tscn")
 func _ready():
 	turn.character_action.ability_used.connect(ability_manager.ability_eval)
 	turn.character_action.get_available_actions.connect(ability_manager.ai_available_actions)
-	Globals.start_turn.connect(on_start_turn)
+	Globals.start_action.connect(on_start_action)
 	Globals.spawn.connect(on_spawn)
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	pass
 
-func on_start_turn():
+func on_start_action():
 	highlight_interface.clear_range()
 	
 func on_spawn():

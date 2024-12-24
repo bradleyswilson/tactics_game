@@ -36,8 +36,8 @@ func _ready():
 	astar_grid.cell_size = Vector2i(32,16)
 	astar_grid.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_NEVER
 	astar_grid.update()
-	Globals.start_turn.connect(on_start_turn)
-	Globals.end_turn.connect(on_end_turn)
+	Globals.start_action.connect(on_start_action)
+	Globals.end_action.connect(on_end_action)
 	set_cell_data()
 	
 	for cell in cells:
@@ -59,20 +59,23 @@ func set_cell_data():
 
 	Globals.gridData[Vector2i(15,0)] = load("res://tilemaps/brain_coral.tres")
 	
-func on_start_turn():
+func on_start_action():
 	# makes terrain un-navigateable 
 	for cell in cells:
 		astar_grid.set_point_solid(cell + Vector2i(1,1) + iso_offset)
 		
 	# makes entities un-navigateable 
-	for entity in Globals.turn_queue:
+	for entity in Globals.enemies:
+		astar_grid.set_point_solid(local_to_map(entity.global_position) + iso_offset)
+	
+	for entity in Globals.party:
 		astar_grid.set_point_solid(local_to_map(entity.global_position) + iso_offset)
 	
 	# make empty cells un-navigateable
 	for cell in empty_cell_pos:
 		astar_grid.set_point_solid(cell + iso_offset)
 
-func on_end_turn():
+func on_end_action():
 	# clear solids to rest on a new grid (clears everything, so reset on start turn)
 	astar_grid.fill_solid_region(astar_grid.region, false)
 				
@@ -124,5 +127,5 @@ func _process(delta):
 	if ability_path.is_empty() or not should_move:
 		return
 	else:
-		move_entity(Globals.turn_entity, delta)
+		move_entity(Globals.action_entity, delta)
 

@@ -16,7 +16,7 @@ var toggle_count = 0
 signal ability_confirm()
 	
 func _input(event):
-	if event.is_action_released("confirm_click") and not Globals.turn_entity.ending_turn:
+	if event.is_action_released("confirm_click") and not Globals.action_entity.ending_turn:
 		selected_body = Globals.hover_entity
 		selected_terrain = Globals.hover_terrain
 		_on_ability_confirm(current_cast)
@@ -70,7 +70,8 @@ func ai_available_actions(turn_entity: Entity):
 	else:
 		selected_ability._damage(selected_ability, selected_entity)
 		tilemap.is_target_valid(move_data, self_pos, selected_move)
-#
+#	
+	
 func check_option(cast_loc: Vector2, casted_ability: AbilityData):
 	"""
 	Tests damage for AI 
@@ -93,8 +94,8 @@ func ability_eval(ability_data: AbilityData, is_valid_cast: bool) -> AbilityData
 		print("Cooldown not ready!")
 		return null
 	
-	if Globals.turn_entity.ap == 0 or \
-	(Globals.turn_entity.ap == 1 and ability_data.ability_name == 'move'): 
+	if Globals.action_entity.ap == 0 or \
+	(Globals.action_entity.ap == 1 and ability_data.ability_name == 'move'): 
 		print("already moved!")
 		return null
 	
@@ -126,7 +127,7 @@ func _on_ability_confirm(casting_ability: AbilityData) -> void:
 	"""
 	toggle_count = 0 
 	if casting_ability:
-		if tilemap.is_target_valid(casting_ability, Globals.turn_entity.global_position, get_global_mouse_position()):
+		if tilemap.is_target_valid(casting_ability, Globals.action_entity.global_position, get_global_mouse_position()):
 			print("yes")
 			# remove range indicators
 			range_highlight.visible = not range_highlight.visible
@@ -136,16 +137,16 @@ func _on_ability_confirm(casting_ability: AbilityData) -> void:
 			
 			match [casting_ability.ability_type]:
 				["player_movement"]:
-					Globals.turn_entity.ap -= 1
+					Globals.action_entity.ap -= 1
 					current_cast = null
 				[_]:
 					ability_execute(casting_ability, tilemap.selected_tile_loc)
-					Globals.turn_entity.ap = 0		
+					Globals.action_entity.ap = 0		
 					highlight_interface.cursor.swap_cursor("square")
 				
 var spell_test = preload('res://ui/highlight_square.tscn')
 func ability_execute(casted_ability: AbilityData, cast_location: Vector2):
-	if Globals.turn_entity.ap > 0:
+	if Globals.action_entity.ap > 0:
 		update_cooldown_display(casted_ability)
 	
 		## TODO not sure if this is correct								
@@ -165,7 +166,7 @@ func ability_execute(casted_ability: AbilityData, cast_location: Vector2):
 
 
 func update_cooldown_display(casted_ability: AbilityData):
-	Globals.turn_entity.cd_array[Globals.spell_ind] = casted_ability.cooldown
+	Globals.action_entity.cd_array[Globals.spell_ind] = casted_ability.cooldown
 	Globals.spell_ind = -1
-	UiBattle.action_bar.update_action_bar(Globals.turn_entity.action_bar_data,
-										  Globals.turn_entity.cd_array)
+	UiBattle.action_bar.update_action_bar(Globals.action_entity.action_bar_data,
+										  Globals.action_entity.cd_array)

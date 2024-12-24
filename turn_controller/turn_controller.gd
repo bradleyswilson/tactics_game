@@ -1,25 +1,26 @@
 class_name FiniteStateController
 extends Node
 
-@export var turn = Turn
+@onready var turn = $Turn
+@onready var label = $Turn/Label
 @onready var spawn = $EnemySpawner
 @onready var player_turn: bool
-var turn_queue = Globals.turn_queue
+@onready var label_text: String
 
 func _ready():
 	player_turn = true
-	turn = turn.new()
 	turn.state_finished.connect(on_state_change)
 
 func on_state_change():
 	turn._exit_state()
-
-	start_turn(player_turn)
 	player_turn = !player_turn
-	#UiBattle.turn_order_display.set_turn_data(Globals.turn_queue)
+	start_turn(player_turn)
 
 func start_turn(player_turn: bool):
 	turn.player_turn = player_turn
+	label_text = 'player turn' if player_turn else 'enemy turn'
+	print('turn_starting: ' + label_text)
 	turn._enter_state()
 
-
+func _process(_delta):
+	label.text = label_text

@@ -106,6 +106,7 @@ theme_override_constants/margin_bottom = 4
 layout_mode = 2
 
 [node name="TurnOrderDisplay" parent="." instance=ExtResource("8_avrua")]
+visible = false
 
 [node name="TextureProgressBar" type="TextureProgressBar" parent="."]
 visible = false
@@ -251,6 +252,7 @@ theme_override_font_sizes/font_size = 8
 text = "End Turn"
 
 [node name="Label" type="Label" parent="."]
+visible = false
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0

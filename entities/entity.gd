@@ -11,6 +11,7 @@ class_name Entity
 @export var ap = 2
 @export var ending_turn = false
 @export var can_act = true
+@export var has_acted = false
 
 const MIN_HP: int = 0
 

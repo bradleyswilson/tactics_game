@@ -54,6 +54,20 @@ script = ExtResource("7_8cf6q")
 [node name="Turn" type="Node" parent="GameState/TurnManager"]
 script = ExtResource("5_dxvvq")
 
+[node name="Label" type="Label" parent="GameState/TurnManager/Turn"]
+texture_filter = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -43.5
+offset_right = 43.5
+offset_bottom = 23.0
+grow_horizontal = 2
+scale = Vector2(1.0094, 1)
+theme_override_font_sizes/font_size = 10
+text = "player turn"
+metadata/_edit_use_anchors_ = true
+
 [node name="EnemySpawner" type="Node" parent="GameState/TurnManager"]
 script = ExtResource("6_pfs68")
 

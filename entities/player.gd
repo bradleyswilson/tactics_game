@@ -37,17 +37,17 @@ func _unhandled_input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("toggle_inventory"):
 		toggle_inventory.emit()
 		
-	if event is InputEventMouseButton and event.pressed and turnable and ending_turn:
-		face_direction(event.position)
-		set_process(false)
-		turnable = false
-		ending_turn = false
-		endturn_direction.emit()
-	
-	if event is InputEventMouseButton and event.pressed and turnable and not ending_turn:
-		face_direction(event.position)
-		set_process(false)
-		turnable = false	
+	#if event is InputEventMouseButton and event.pressed and turnable and ending_turn:
+		#face_direction(event.position)
+		#set_process(false)
+		#turnable = false
+		#ending_turn = false
+		#endturn_direction.emit()
+	#
+	#if event is InputEventMouseButton and event.pressed and turnable and not ending_turn:
+		#face_direction(event.position)
+		#set_process(false)
+		#turnable = false	
 
 func face_direction(mouse_position):
 	var direction = mouse_position - sprite.global_position
